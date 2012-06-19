@@ -1,0 +1,6 @@
+This will serve as the templete for future Spring Web Apps
+
+Configure dependencies:
+	$ mvn clean install  /template/superPom/
+	$ mvn package /template/superPom/
+
