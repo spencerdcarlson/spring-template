@@ -32,7 +32,7 @@ public class QuestionManager implements QuestionManagerInterface {
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<Question> getAllQuestions() {
-		return getCurrentSession().createQuery("from questions").list();
+		return getCurrentSession().createQuery("from Question").list();
 	}
 
 	@Transactional(readOnly = true)

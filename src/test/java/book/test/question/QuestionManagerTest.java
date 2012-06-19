@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -52,10 +50,8 @@ public class QuestionManagerTest {
 
 	@Test
 	public void testGetAllAccounts() {
-		System.out.println("***Question List Test ****");
 		List<Question> question = questionManager.getAllQuestions();
-		System.out.println("***Question List Test ****");		
-		//assertEquals("Wrong number of questions", 1, accounts.size());
+		assertEquals("Wrong number of questions", 1, question.size());
 	}
 
 	@Test
@@ -71,46 +67,19 @@ public class QuestionManagerTest {
 	}
 
 	@Test
-	public void testUpdateAccount() {
+	public void testUpdateQuestion() {
 		Question oldQuestion = questionManager.getQuestion(1);
-		oldQuestion.setOptions("Ben Hale");
+		oldQuestion.setQuestion("Ben Hale");
+		oldQuestion.setAnswer("Man");
+		oldQuestion.setOptions("Spencer");
 		questionManager.update(oldQuestion);
 		Question newQuestion = questionManager.getQuestion(1);
-		assertEquals("Did not persist the question change", "Ben Hale", newQuestion.getQuestion());
+		assertEquals("Did not update the question change", "Ben Hale", newQuestion.getQuestion());
+		assertEquals("Did not update the Answer change", "Man", newQuestion.getAnswer());
+		assertEquals("Did not update the Options change", "Spencer", newQuestion.getOptions());
 	}
 
-/*
-	@Test
-	public void testUpdateAccountBeneficiaries() {
-		Map<String, Percentage> allocationPercentages = new HashMap<String, Percentage>();
-		allocationPercentages.put("Annabelle", Percentage.valueOf("25%"));
-		allocationPercentages.put("Corgan", Percentage.valueOf("75%"));
-		questionManager.updateBeneficiaryAllocationPercentages(1, allocationPercentages);
-		Account account = questionManager.getAccount(1);
-		assertEquals("Invalid adjusted percentage", Percentage.valueOf("25%"), 
-				account.getBeneficiary("Annabelle").getAllocationPercentage());
-		assertEquals("Invalid adjusted percentage", Percentage.valueOf("75%"), 
-				account.getBeneficiary("Corgan").getAllocationPercentage());
-	}
 
-	@Test
-	public void testAddBeneficiary() {
-		questionManager.addBeneficiary(1, "Ben");
-		Account account = questionManager.getAccount(1);
-		assertEquals("Should only have three beneficiaries", 3, account.getBeneficiaries().size());
-	}
-
-	@Test
-	public void testRemoveBeneficiary() {
-		Map<String, Percentage> allocationPercentages = new HashMap<String, Percentage>();
-		allocationPercentages.put("Corgan", Percentage.oneHundred());
-		questionManager.removeBeneficiary(1, "Annabelle", allocationPercentages);
-		Account account = questionManager.getAccount(1);
-		assertEquals("Should only have one beneficiary", 1, account.getBeneficiaries().size());
-		assertEquals("Corgan should now have 100% allocation", Percentage.oneHundred(), account
-				.getBeneficiary("Corgan").getAllocationPercentage());
-	}
-*/
 	@After
 	public void tearDown() throws Exception {
 		// rollback the transaction to avoid corrupting other tests
@@ -132,8 +101,8 @@ public class QuestionManagerTest {
 	private DataSource createTestDataSource() {
 		return new EmbeddedDatabaseBuilder()
 			.setName("dyad_book_local")
-			.addScript("eis/byuh/db/mysql_schema.sql")
-			.addScript("eis/byuh/db/mysql_test-data.sql")
+			.addScript("test/db/mysql_schema.sql")
+			.addScript("test/db/mysql_test-data.sql")
 			.build();
 	}
 

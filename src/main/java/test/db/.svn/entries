@@ -2,7 +2,7 @@
 
 dir
 0
-http://svn.byuh.edu/byuh/trunk/template/src/main/java/eis/byuh/db
+http://svn.byuh.edu/byuh/trunk/template/src/main/resources/test/db
 http://svn.byuh.edu/byuh
 add
 
@@ -25,14 +25,6 @@ add
 
 
 423a812b-5d5f-49b2-95f4-87146875299c
-
-
-
-
-
-
-
-empty
 
 mysql_schema.sql
 file

@@ -59,8 +59,8 @@
 	</bean>
 
 	<jdbc:initialize-database data-source="dataSource" >
-		<jdbc:script location="classpath:eis/byuh/db/mysql_schema.sql" />
-		<jdbc:script location="classpath:eis/byuh/db/mysql_test-data.sql" />
+		<jdbc:script location="classpath:test/db/mysql_schema.sql" />
+		<jdbc:script location="classpath:test/db/mysql_test-data.sql" />
 	</jdbc:initialize-database>
 	
 

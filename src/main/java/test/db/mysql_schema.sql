@@ -1,6 +1,6 @@
-drop table if exists questions;
+drop table if exists question;
 
-CREATE TABLE questions (
+CREATE TABLE question (
  question_id INT NOT NULL ,
  question VARCHAR(45) NOT NULL ,
  answer VARCHAR(45) NOT NULL ,
