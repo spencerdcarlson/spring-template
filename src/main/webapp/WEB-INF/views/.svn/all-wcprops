@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/byuh/!svn/ver/1271/trunk/template/src/main/webapp/WEB-INF/views
+END
+header.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/byuh/!svn/ver/1271/trunk/template/src/main/webapp/WEB-INF/views/header.jsp
+END
+home.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/byuh/!svn/ver/1271/trunk/template/src/main/webapp/WEB-INF/views/home.jsp
+END
+footer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/byuh/!svn/ver/1271/trunk/template/src/main/webapp/WEB-INF/views/footer.jsp
+END
