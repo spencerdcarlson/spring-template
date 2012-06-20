@@ -1,8 +1,8 @@
 drop table if exists question;
 
-CREATE TABLE question (
- question_id INT NOT NULL ,
- question VARCHAR(45) NOT NULL ,
- answer VARCHAR(45) NOT NULL ,
- options VARCHAR(45) NOT NULL,
- PRIMARY KEY (question_id) );
+CREATE table question ( 
+question_id integer primary key auto_increment,
+question varchar(45) not null,
+answer varchar(45) not null,
+options varchar(45) not null
+);

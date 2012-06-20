@@ -52,15 +52,15 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<!-- <property name="url" value="jdbc:mysql://eis-test-db1.byuh.edu/dyad_books" /> -->
-		<property name="url" value="jdbc:mysql://localhost:3306/dyad_book" />
+		<!--  <property name="url" value="jdbc:mysql://eis-test-db1.byuh.edu/dyad_book" /> --> 
+		 <property name="url" value="jdbc:mysql://localhost:3306/dyad_book" /> 
 		<property name="username" value="spring" />
 		<property name="password" value="spring" />
 	</bean>
 
 	<jdbc:initialize-database data-source="dataSource" >
 		<jdbc:script location="classpath:test/db/mysql_schema.sql" />
-		<jdbc:script location="classpath:test/db/mysql_test-data.sql" />
+		<jdbc:script location="classpath:test/db/mysql_data.sql" />
 	</jdbc:initialize-database>
 	
 

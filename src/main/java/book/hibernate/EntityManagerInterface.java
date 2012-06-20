@@ -5,27 +5,20 @@ import java.util.List;
 import book.entities.Question;
 
 
-public interface QuestionManagerInterface {
+public interface EntityManagerInterface {
 
+	/**
+	 * 
+	 * @param id id of the desired question to be returned
+	 * @return Question with specified id
+	 */
+	public Question getQuestion(Integer id);
+	
 	/**
 	 * Get all questions in the system
 	 * @return all questions
 	 */
 	public List<Question> getAllQuestions();
-
-	/**
-	 * Return the next Question.
-	 * @param current current question
-	 * @return the question
-	 */
-	public Question getNextQuestion(Question current);
-
-	/**
-	 * Return the previous Question.
-	 * @param current current question
-	 * @return the question
-	 */
-	public Question getPreviousQuestion(Question current);
 	
 	/**
 	 * Insert new question

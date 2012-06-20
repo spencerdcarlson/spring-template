@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import book.entities.Question;
@@ -15,7 +17,7 @@ import book.entities.Question;
  * An account manager that uses Hibernate to find accounts.
  */
 @Repository
-public class QuestionManager implements QuestionManagerInterface {
+public class QuestionManager implements EntityManagerInterface {
 
 	private SessionFactory sessionFactory;
 
@@ -55,7 +57,11 @@ public class QuestionManager implements QuestionManagerInterface {
 
 	@Transactional
 	public void addQuestion(String question, String answer, String options) {
-		// getCurrentSession() . insert options
+		Question temp = new Question(question);
+		//temp.setId(50);
+		temp.setAnswer(answer);
+		temp.setOptions(options);
+		getCurrentSession().save(temp);
 	}
 
 	@Transactional
@@ -63,19 +69,13 @@ public class QuestionManager implements QuestionManagerInterface {
 		// getCurrentSession() remove questionId 
 	}
 	
-	@Transactional
-	public Question getNextQuestion(Question current) {
-		Integer currentId = current.getId();
-		currentId++;
-		return getQuestion(currentId);
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@SuppressWarnings("unchecked")
+	public int getSize(){
+		List<Question> qList = getCurrentSession().createQuery("from Question").list();
+		return qList.size();
 	}
-
-	@Transactional
-	public Question getPreviousQuestion(Question current) {
-		Integer currentId = current.getId();
-		currentId--;
-		return getQuestion(currentId);
-	}
+	
 
 	/**
 	 * Returns the session associated with the ongoing reward transaction.

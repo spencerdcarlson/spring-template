@@ -1,0 +1,5 @@
+#surefire
+#Tue Jun 19 12:59:40 HST 2012
+user.dir=/Users/spencerdcarlson/eis/template
+localRepository=/Users/spencerdcarlson/.m2/repository
+basedir=/Users/spencerdcarlson/eis/template
