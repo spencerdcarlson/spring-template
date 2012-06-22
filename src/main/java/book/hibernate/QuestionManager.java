@@ -2,9 +2,13 @@ package book.hibernate;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +23,17 @@ import book.entities.Question;
 @Repository
 public class QuestionManager implements EntityManagerInterface {
 
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	/**
 	 * Creates a new Hibernate account manager.
 	 * @param sessionFactory the Hibernate session factory
 	 */
-	public QuestionManager(SessionFactory sessionFactory) {
+	// So test's can manually add the sessionFactory
+	public void setSession(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
 	}
-
-	
 	
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
@@ -39,6 +43,7 @@ public class QuestionManager implements EntityManagerInterface {
 
 	@Transactional(readOnly = true)
 	public Question getQuestion(Integer id) {
+		System.out.println("GET QUESTION: " + id);
 		return (Question) getCurrentSession().load(Question.class, id);
 	}
 
@@ -75,7 +80,6 @@ public class QuestionManager implements EntityManagerInterface {
 		List<Question> qList = getCurrentSession().createQuery("from Question").list();
 		return qList.size();
 	}
-	
 
 	/**
 	 * Returns the session associated with the ongoing reward transaction.

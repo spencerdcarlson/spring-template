@@ -1,5 +1,11 @@
 $(document).ready(function() {  
-	$('body').click(function() {
-		  alert("Body Click");
+	$('header').click(function() {
+		  alert("JQuery Enabled: You Clicked the Header");
 		});
+	$('#next').click(function() {
+		$('#content').load(window.location+'next');
+	});
+	$('#prev').click(function(){
+		$('#content').load(window.location+'prev');
+	});
 });
