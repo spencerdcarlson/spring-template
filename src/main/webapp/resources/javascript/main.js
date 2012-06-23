@@ -8,4 +8,7 @@ $(document).ready(function() {
 	$('#prev').click(function(){
 		$('#content').load(window.location+'prev');
 	});
+	$('#new').click(function(){
+		$('#content').load(window.location+'new');
+	});
 });
