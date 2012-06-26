@@ -7,12 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name = "question")
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "question_id")
+	@JsonIgnore
 	private int id;
 	@Column(name = "question")
 	private String question;
@@ -22,7 +25,11 @@ public class Question {
 	private String options;
 	
 	protected Question() {
-		
+	}
+	public Question(Question newQuestion){
+		this.question = newQuestion.question;
+		this.answer = newQuestion.answer;
+		this.options = newQuestion.options;		
 	}
 	public Question( String question) {
 		this.question = question;

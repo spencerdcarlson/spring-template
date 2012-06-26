@@ -1,7 +1,7 @@
 $(document).ready(function() {  
 	$('header').click(function() {
-		  alert("JQuery Enabled: You Clicked the Header");
-		});
+		alert("JQuery Enabled: You Clicked the Header");
+	});
 	$('#next').click(function() {
 		$('#content').load(window.location+'next');
 	});
@@ -11,4 +11,6 @@ $(document).ready(function() {
 	$('#new').click(function(){
 		$('#content').load(window.location+'new');
 	});
+
+	
 });

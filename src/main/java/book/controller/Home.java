@@ -35,6 +35,7 @@ public class Home {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "index";
+		
 	}
 	
 }

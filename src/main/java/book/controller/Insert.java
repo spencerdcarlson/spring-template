@@ -1,15 +1,24 @@
 package book.controller;
 
+import java.io.IOException;
 import java.util.Locale;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ContextLoaderListener;
 
 import book.entities.Question;
@@ -36,11 +45,30 @@ public class Insert {
 	@RequestMapping(value = "/submit", method = RequestMethod.GET)
 	public String submit(@RequestParam("question") String question, 
 			@RequestParam("answer") String answer, @RequestParam("options") String options,  Model model){
-	questionManager.addQuestion(question, answer, options);
-	model.addAttribute("question", question);
-	model.addAttribute("answer", answer);
-	model.addAttribute("options", options);
+		questionManager.addQuestion(question, answer, options);
+		model.addAttribute("question", question);
+		model.addAttribute("answer", answer);
+		model.addAttribute("options", options);
 		return "confirm";
 
+	}
+
+	@RequestMapping(value = "/json/{question}", method = RequestMethod.GET)
+	public @ResponseBody Question question2Json(@PathVariable String question) {
+		ObjectMapper mapper = new ObjectMapper();
+		Question newQuestion;
+		try {
+			// Map JSON string to Java Object
+			newQuestion = mapper.readValue(question, Question.class);
+			System.out.println("Question: " + newQuestion.toString());
+			// Insert Java Object into Database 
+			//newQuestion.setId(10); // if id isn't set to @JsonIgnore
+			questionManager.addQuestion(newQuestion.getQuestion(), newQuestion.getAnswer(), newQuestion.getOptions());
+			return newQuestion;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//Question newQuestion = new Question(question);
+		return null;
 	}
 }
