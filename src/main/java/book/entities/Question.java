@@ -16,50 +16,50 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "question_id")
 	@JsonIgnore
-	private int id;
-	@Column(name = "question")
-	private String question;
-	@Column(name = "answer")
-	private String answer;
-	@Column(name = "options")
-	private String options;
+	private int questionId;
+	@Column(name = "question_txt")
+	private String questionTxt;
+	@Column(name = "question_answer")
+	private String questionAnswer;
+	@Column(name = "question_options")
+	private String questionOptions;
 	
 	protected Question() {
 	}
 	public Question(Question newQuestion){
-		this.question = newQuestion.question;
-		this.answer = newQuestion.answer;
-		this.options = newQuestion.options;		
+		this.questionTxt = newQuestion.questionTxt;
+		this.questionAnswer = newQuestion.questionAnswer;
+		this.questionOptions = newQuestion.questionOptions;		
 	}
 	public Question( String question) {
-		this.question = question;
+		this.questionTxt = question;
 	}
 	public int getId() {
-		return id;
+		return questionId;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.questionId = id;
 	}
 	public String getQuestion() {
-		return question;
+		return questionTxt;
 	}
 	public void setQuestion(String question) {
-		this.question = question;
+		this.questionTxt = question;
 	}
 	public String getAnswer() {
-		return answer;
+		return questionAnswer;
 	}
 	public void setAnswer(String answer) {
-		this.answer = answer;
+		this.questionAnswer = answer;
 	}
 	public String getOptions() {
-		return options;
+		return questionOptions;
 	}
 	public void setOptions(String options) {
-		this.options = options;
+		this.questionOptions = options;
 	}
 	public String toString() {
-		return "| id: " + id + " | Question: " + question + 
-		" | Options: " + options + " | Answer: " + answer;
+		return "| id: " + questionId + " | Question: " + questionTxt + 
+		" | Options: " + questionOptions + " | Answer: " + questionAnswer;
 	}
 }
