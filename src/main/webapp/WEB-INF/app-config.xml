@@ -17,8 +17,10 @@
 	<!-- The configuration of the account manager application. -->
 	<context:annotation-config />
 
-	<!-- The Question manager service that can load accounts from the database -->
+	<!-- The Question manager service that can load questions from the database -->
 	<bean id="questionManager" class="book.hibernate.QuestionManager"></bean>
+	<!-- The Section manager service that can load sections from the database -->
+	<bean id="sectionManager" class="book.hibernate.SectionManager"></bean>
 
 	<!-- A Hibernate SessionFactory for mapping Accounts and Beneficiaries from 
 		object to relation tables -->
@@ -29,6 +31,8 @@
 			<list>
 				<value>book.entities.Question</value>
 				<value>book.hibernate.QuestionManager</value>
+				<value>book.entities.Section</value>
+				<value>book.hibernate.SectionManager</value>
 				<!-- ADD CLASSES <value>new.class</value> -->
 			</list>
 		</property>
