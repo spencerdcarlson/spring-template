@@ -12,5 +12,10 @@ $(document).ready(function() {
 		$('#content').load(window.location+'new');
 	});
 
-	
 });
+
+function mainNavigation(id){
+	$.get(window.location+'section', {id: id}, function(data){
+		$('#questions').html(data);
+	});
+}

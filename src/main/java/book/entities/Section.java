@@ -1,11 +1,15 @@
 package book.entities;
 
+
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -23,6 +27,8 @@ public class Section {
 	private String sectionName;
 	@Column(name = "instruction_id")
 	private String instructionId;
+	@Transient
+	private List<Section> children;
 	
 	public int getSectionId() {
 		return sectionId;
@@ -48,9 +54,18 @@ public class Section {
 	public void setInstructionId(String instructionId) {
 		this.instructionId = instructionId;
 	}
-	public String toString(){
-		return "Id: "+sectionId+" Parent: "+parentId+" Name: "+sectionName+" Instruction: "+instructionId;
+	
+	public void addChild(Section section){
+		this.children.add(section);
 	}
+	
+	public String toString(){
+		return "Section [sectionId="+sectionId+
+				", parentId="+parentId+
+				", sectionName="+sectionName+
+				", instructionId="+instructionId+
+				", children="+children+"]";
+		}
 
 
 }

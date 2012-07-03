@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import com.google.gson.Gson;
+import org.json.simple.JSONObject;
+
+import book.entities.Question;
 import book.entities.Section;
 import book.hibernate.SectionManager;
 
@@ -25,7 +37,7 @@ public class Home {
 	
 	@Autowired
 	private SectionManager sectionManager;
-	private static final Logger logger = LoggerFactory.getLogger(Home.class);
+		private static final Logger logger = LoggerFactory.getLogger(Home.class);
 	
 	
 	/**
@@ -34,8 +46,10 @@ public class Home {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! the client locale is "+ locale.toString());
-		
+				
 		List<Section> allSections = sectionManager.getAllSections();
+		Section topNode = sectionManager.getSection(1);
+		List<Section> mainChildren = sectionManager.getChildren(topNode);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -43,7 +57,10 @@ public class Home {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("section", allSections);
+		model.addAttribute("topNode", topNode);
+		model.addAttribute("mainChildren", mainChildren);
 		model.addAttribute("serverTime", formattedDate );
+		
 		
 		return "index";
 		
