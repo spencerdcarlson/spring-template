@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import book.entities.Section;
 
 @Entity
 @Table(name = "question")
@@ -23,7 +26,12 @@ public class Question {
 	private String questionAnswer;
 	@Column(name = "question_options")
 	private String questionOptions;
-	
+	@Column(name = "section_id")
+	private int sectionId;
+//	@ManyToOne
+//	@JoinColumn(name="sectionId")
+//	private Section section;
+
 	protected Question() {
 	}
 	public Question(Question newQuestion){
@@ -33,6 +41,19 @@ public class Question {
 	}
 	public Question( String question) {
 		this.questionTxt = question;
+	}
+	public Question(Integer questionId, Integer sectionId, String questionTxt, String questionAnswer, String questionOptions ){
+		this.questionId = questionId;
+		this.sectionId = sectionId;
+		this.questionTxt = questionTxt;
+		this.questionAnswer = questionAnswer;
+		this.questionOptions = questionOptions;
+	}
+	public Question(Integer sectionId, String questionTxt, String questionAnswer, String questionOptions ){
+		this.sectionId = sectionId;
+		this.questionTxt = questionTxt;
+		this.questionAnswer = questionAnswer;
+		this.questionOptions = questionOptions;
 	}
 	public int getId() {
 		return questionId;
@@ -58,8 +79,24 @@ public class Question {
 	public void setOptions(String options) {
 		this.questionOptions = options;
 	}
-	public String toString() {
-		return "| id: " + questionId + " | Question: " + questionTxt + 
-		" | Options: " + questionOptions + " | Answer: " + questionAnswer;
+
+	public int getSectionId() {
+		return sectionId;
 	}
+	public void setSectionId(int sectionId) {
+		this.sectionId = sectionId;
+	}
+	public String toString(){
+		return "Question [questionId="+questionId+
+				", sectionId="+sectionId+
+				", questionTxt="+questionTxt+
+				", questionOptions="+questionOptions+
+				", questionAnswer="+questionAnswer+"]";
+	}
+//	public Section getSection() {
+//		return section;
+//	}
+//	public void setSection(Section section) {
+//		this.section = section;
+//	}
 }

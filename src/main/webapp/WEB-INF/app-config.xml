@@ -33,6 +33,7 @@
 				<value>book.hibernate.QuestionManager</value>
 				<value>book.entities.Section</value>
 				<value>book.hibernate.SectionManager</value>
+				<value>book.entities.Instruction</value>
 				<!-- ADD CLASSES <value>new.class</value> -->
 			</list>
 		</property>

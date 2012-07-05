@@ -1,4 +1,5 @@
-/* ===================================================
+/* Eclipse doesn't like this file Project Properties > JavaScript > Include Path > Source > Excluded add thisFile.js
+ * ===================================================
  * bootstrap-transition.js v2.0.4
  * http://twitter.github.com/bootstrap/javascript.html#transitions
  * ===================================================

@@ -50,16 +50,13 @@ public class QuestionManager implements EntityManagerInterface {
 		if (options != null) questionUpdate.setOptions(options);
 	}
 
-	public void addQuestion(String question, String answer, String options) {
-		Question temp = new Question(question);
-		//temp.setId(50);
-		temp.setAnswer(answer);
-		temp.setOptions(options);
-		getCurrentSession().save(temp);
+	public void addQuestion(Question newQuestion ){
+		System.out.println("INSERT NEW QUESTINO: " + newQuestion.toString());
+		getCurrentSession().save(newQuestion);
 	}
 
-	public void removeQuestion(Integer questionId) {
-		// getCurrentSession() remove questionId 
+	public void removeQuestion(Question question) {
+		getCurrentSession().delete(question); 
 	}
 
 	@SuppressWarnings("unchecked")

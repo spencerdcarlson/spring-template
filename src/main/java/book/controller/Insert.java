@@ -44,8 +44,17 @@ public class Insert {
 	}
 	@RequestMapping(value = "/submit", method = RequestMethod.GET)
 	public String submit(@RequestParam("question") String question, 
-			@RequestParam("answer") String answer, @RequestParam("options") String options,  Model model){
-		questionManager.addQuestion(question, answer, options);
+			@RequestParam("answer") String answer, 
+			@RequestParam("options") String options, 
+			@RequestParam("sectionId") String sectionId,  Model model){
+		try{
+			Integer sId = Integer.parseInt(sectionId);
+			Question newQuestion = new Question(sId,question,answer,options);
+			questionManager.addQuestion(newQuestion);
+		}catch(NumberFormatException e) {
+			System.out.println("New question wasn't inserted into the DB: " + e);
+		}
+		model.addAttribute("sectionId", sectionId);
 		model.addAttribute("question", question);
 		model.addAttribute("answer", answer);
 		model.addAttribute("options", options);
@@ -63,7 +72,7 @@ public class Insert {
 			System.out.println("Question: " + newQuestion.toString());
 			// Insert Java Object into Database 
 			//newQuestion.setId(10); // if id isn't set to @JsonIgnore
-			questionManager.addQuestion(newQuestion.getQuestion(), newQuestion.getAnswer(), newQuestion.getOptions());
+			questionManager.addQuestion(newQuestion);
 			return newQuestion;
 		} catch (IOException e) {
 			e.printStackTrace();

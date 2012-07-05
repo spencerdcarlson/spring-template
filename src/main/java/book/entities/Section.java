@@ -3,11 +3,15 @@ package book.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,8 +31,14 @@ public class Section {
 	private String sectionName;
 	@Column(name = "instruction_id")
 	private String instructionId;
+	@Column(name = "has_child")
+	private int hasChild;
 	@Transient
-	private List<Section> children;
+	public List<Section> children;
+	@OneToMany(mappedBy="section", cascade = CascadeType.ALL)
+	public List<Question> questions;
+	@Transient
+	public Instruction instruction;
 	
 	public int getSectionId() {
 		return sectionId;
@@ -59,13 +69,24 @@ public class Section {
 		this.children.add(section);
 	}
 	
+	public int getHasChild() {
+		return hasChild;
+	}
+	public void setHasChild(int hasChild) {
+		this.hasChild = hasChild;
+	}
+	
 	public String toString(){
 		return "Section [sectionId="+sectionId+
 				", parentId="+parentId+
 				", sectionName="+sectionName+
 				", instructionId="+instructionId+
+				", questions="+questions+
+				", instruction="+instruction+
 				", children="+children+"]";
 		}
+	
+	
 
 
 }

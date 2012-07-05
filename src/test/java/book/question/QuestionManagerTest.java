@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -71,9 +73,9 @@ public class QuestionManagerTest {
 		// of the database
 		assertNotNull("account should never be null", question);
 		assertEquals("wrong id",1, question.getId());
-		assertEquals("wrong question", "The dog // on the chair", question.getQuestion());
-		assertEquals("wrong answer", "jumped", question.getAnswer());
-		assertEquals("wrong options","jumped // bounced", question.getOptions());
+		assertEquals("wrong question", "Please check to see if shes ready.", question.getQuestion());
+		assertEquals("wrong answer", "B", question.getAnswer());
+		assertEquals("wrong options","A//B", question.getOptions());
 	}
 
 	@Test
@@ -81,12 +83,23 @@ public class QuestionManagerTest {
 		int before = questionManager.getSize();
 		System.out.println("Size before Insertion: " + before);
 		before++;
-		questionManager.addQuestion("The girl // to the store", "ran", "ran // runs ");
+		Question newQuestion = new Question(3,3,"The student union had a game room with six color TVs.", "B", "A//B");
+		questionManager.addQuestion(newQuestion);
 		int after = questionManager.getSize();
 		System.out.println("Size after Insertion: " + after);
 		assertEquals("Entity not added: ", before, after);
 
 
+	}
+	@Test
+	public void testRemoveQuestion() {
+		int before = questionManager.getSize();
+		System.out.println("Size before Deletion: " + before);
+		before--;
+		questionManager.removeQuestion(questionManager.getQuestion(2));
+		int after = questionManager.getSize();
+		System.out.println("Size after Deletion: " + after);
+		assertEquals("Entity not added: ", before, after);
 	}
 
 	@Test
@@ -123,13 +136,7 @@ public class QuestionManagerTest {
 		assertEquals("Did not update the Options change", optionsInput, newQuestion.getOptions());
 	}
 
-
-	@After
-	public void tearDown() throws Exception {
-		// rollback the transaction to avoid corrupting other tests
-		if (transactionManager != null) transactionManager.rollback(transactionStatus);
-	}
-
+	
 	private SessionFactory createTestSessionFactory() throws Exception {
 		// create a FactoryBean to help create a Hibernate SessionFactory
 		AnnotationSessionFactoryBean factoryBean = new AnnotationSessionFactoryBean();
@@ -143,26 +150,29 @@ public class QuestionManagerTest {
 	}
 
 	private DataSource createTestDataSource() {
+		// Remote testing DB
 		BasicDataSource bds = new BasicDataSource();
 		bds.setDriverClassName("com.mysql.jdbc.Driver");
-		bds.setUrl("jdbc:mysql://eis-test-db1.byuh.edu/dyad_book");
+		bds.setUrl("jdbc:mysql://eis-test-db1.byuh.edu/test_reading_writing_center");
 		bds.setUsername("spring");
 		bds.setPassword("spring");
 		return bds;
 
-		//		return new EmbeddedDatabaseBuilder()
-		//			.setName("dyad_book_local")
-		//			.addScript("test/db/mysql_test-schema.sql")
-		//			.addScript("test/db/mysql_test-data.sql")
-		//			.build();
+		// Local HSQLDB 
+		/** testaddQuestin will fail unless you comment out @GeneratedValue in Question Class (line 19) **/
+//		return new EmbeddedDatabaseBuilder()
+//			.setName("dyad_book_local")
+//			.addScript("test/db/mysql_schema.sql")
+//			.addScript("test/db/mysql_data.sql")
+//			.build();
 	}
 
 	private Properties createHibernateProperties() {
 		Properties properties = new Properties();
 		// turn on formatted SQL logging (very useful to verify Hibernate is
 		// issuing proper SQL)
-		properties.setProperty("hibernate.show_sql", "false");
-		properties.setProperty("hibernate.format_sql", "false");
+		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.format_sql", "true");
 		return properties;
 	}
 }

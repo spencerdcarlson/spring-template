@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -21,6 +23,7 @@ public class Instruction {
 	private String instructionName;
 	@Column(name = "instruction_txt")
 	private String instructionText;
+	
 	
 	public int getInstructionId() {
 		return instructionId;
@@ -41,8 +44,9 @@ public class Instruction {
 		this.instructionText = instructionTxt;
 	}
 	public String toString(){
-		return "Id: "+instructionId+" Name: "+instructionName+" Text: "+instructionText;
-	}
-	
+		return "Instruction [instructionId="+instructionId+
+				", instructionName="+instructionName+
+				", instructionText="+instructionText+"]";
+		}
 	
 }

@@ -26,13 +26,13 @@ public interface EntityManagerInterface {
 	 * @param answer answer to new question
 	 * @param options possible options for new question
 	 */
-	public void addQuestion(String question, String answer, String options);
+	public void addQuestion(Question question);
 	
 	/**
 	 * remove a question based on given id
 	 * @param questionId id of the question to delete
 	 */
-	public void removeQuestion(Integer questionId);
+	public void removeQuestion(Question question);
 	
 	/**
 	 * Takes a changed question and persists any changes made to it.
