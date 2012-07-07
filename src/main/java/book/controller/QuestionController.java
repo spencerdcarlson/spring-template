@@ -76,14 +76,8 @@ public class QuestionController {
 	public String getSection(@RequestParam("id") String id, Model model){
 		System.out.println("id: " +id);
 		int Id = Integer.parseInt(id);
-		List<Section> children = sectionManager.getChildren(sectionManager.getSection(Id));
-
+		List<Section> children = sectionManager.getSection(Id).getChildren();
 		model.addAttribute("children", children);
-		for (Section s : children) {
-			//ql.add(sectionManager.getquestions(s));
-		}
-		//List of Question Lists
-		//model.addAttribute("ql", ql);
 		return "section";
 	}
 

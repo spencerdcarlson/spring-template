@@ -38,17 +38,25 @@
 			</list>
 		</property>
 		<property name="hibernateProperties">
-			<value>
-				hibernate.dialect=org.hibernate.dialect.MySQLDialect
-			</value>
+			<ref bean="hibernateSettings" />
 		</property>
 	</bean>
+	
+	<bean id="hibernateSettings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+      <property name="properties">
+         <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.hbm2ddl.auto">create</prop>
+         </props>
+      </property>
+   </bean>
 
 	<!-- Creates a MySQL Datasource and populates test data to it -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_center" />
+		<property name="url"
+			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_center" />
 
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/dyad_book" 
 			/> -->
@@ -56,8 +64,9 @@
 		<property name="password" value="spring" />
 	</bean>
 
-	<jdbc:initialize-database data-source="dataSource" enabled="false">
-		
+	<jdbc:initialize-database data-source="dataSource"
+		enabled="false">
+
 		<jdbc:script location="classpath:test/db/mysql_schema.sql" />
 		<jdbc:script location="classpath:test/db/mysql_data.sql" />
 	</jdbc:initialize-database>

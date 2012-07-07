@@ -21,7 +21,7 @@
                 </ul>
               </li>
               -->
-              <c:forEach var="section" items="${mainChildren}" varStatus="status">
+              <c:forEach var="section" items="${nav}" varStatus="status">
               <li><a onclick="mainNavigation(this.id);" id="${section.sectionId}" >${section.sectionName}</a></li>
               </c:forEach>
             </ul>

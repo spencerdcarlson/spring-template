@@ -5,10 +5,13 @@
 			<div class="span12">
 				<h2 class="sectionTitle">${child.sectionName}</h2>
 				<p class="sectionInstructions"></p>
-				
-				
+			
 				<ol>
-					<li></li>
+				
+				<c:forEach var="question" items="${child.questions}" varStatus="status">
+					<li>${status.count} Question</li>
+				</c:forEach>
+			
 				</ol>
 			</div><!--/span-->
 		</div><!-- row-fluid -->

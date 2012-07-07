@@ -70,6 +70,9 @@
 		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> -->
 	<build>
 		<plugins>
+			<!-- hibernate3:hbm2ddl for building and inserting db from DAO -->
+			
+
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>

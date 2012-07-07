@@ -20,10 +20,7 @@ public class SectionManager implements SectionHibInterface {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private static String jsonSectionChildList = "";
-	private static String jsonQuestionList = "";
-	private Gson gson = new Gson();
-
+	
 	// So test's can manually add the sessionFactory
 	public void setSession(SessionFactory sessionFactory){
 		this.sessionFactory = sessionFactory;
@@ -42,46 +39,4 @@ public class SectionManager implements SectionHibInterface {
 	protected Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-
-	@SuppressWarnings("unchecked")
-	public String getJSONChildren(Section section){
-		section.children = (List<Section>) getCurrentSession().createQuery("from Section s where s.parentId="+section.getSectionId()).list();
-		for (Section s: section.children){
-			if (s.getInstructionId() != null) {
-				s.instruction = (Instruction) getCurrentSession().load(Instruction.class, Integer.parseInt(s.getInstructionId()));
-			}
-			if (s.getHasChild() == 1 ) {
-				getChildren(s);
-			}else {
-				s.questions =  (List<Question>) getCurrentSession().createQuery("from Question q where q.sectionId="+s.getSectionId()).list();
-			}
-		}
-		
-		return gson.toJson(section);
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Section> getChildren(Section section) {
-		List<Section> childList =  (List<Section>) getCurrentSession().createQuery("from Section s where s.parentId="+section.getSectionId()).list();
-		return childList;
-
-	}
-
-
-	@Override
-	public Section getPareent(Section section) {
-		return (Section) getCurrentSession().createSQLQuery("SELECT * FROM section WHERE section_id=" + section.getSectionId());
-	}
-
-	public static boolean isNumeric(String str){
-		NumberFormat formatter = NumberFormat.getInstance();
-		ParsePosition pos = new ParsePosition(0);
-		formatter.parse(str, pos);
-		return str.length() == pos.getIndex();
-	}
-
-
-
 }

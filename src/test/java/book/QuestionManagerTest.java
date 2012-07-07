@@ -1,4 +1,4 @@
-package book.question;
+package book;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,8 +31,11 @@ import org.springframework.jdbc.support.incrementer.MySQLMaxValueIncrementer;
 
 import com.mysql.jdbc.Driver;
 
+import book.entities.Instruction;
 import book.entities.Question;
+import book.entities.Section;
 import book.hibernate.QuestionManager;
+import book.hibernate.SectionManager;
 
 
 /**
@@ -44,23 +47,28 @@ public class QuestionManagerTest {
 	private QuestionManager questionManager;
 	private PlatformTransactionManager transactionManager;
 	private TransactionStatus transactionStatus;
-
+	private SectionManager sectionManager;
+	
 	@Before
 	public void setUp() throws Exception {
 		// setup the repository to test
 		SessionFactory sessionFactory = createTestSessionFactory();
 		questionManager = new QuestionManager();
 		questionManager.setSession(sessionFactory);
+		sectionManager = new SectionManager();
+		sectionManager.setSession(sessionFactory);
+		
 		// begin a transaction
 		transactionManager = new HibernateTransactionManager(sessionFactory);
 		transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+		
 	}
 
 	@Test
 	public void testGetAllQuesitions() {
 		List<Question> question = questionManager.getAllQuestions();
 		// Size should match number of inserts in mysql_test-data
-		assertEquals("Wrong number of questions", 2, question.size());
+		assertEquals("Wrong number of questions", 25, question.size());
 		for (Question q: question){
 			System.out.println(q.toString());
 		}
@@ -71,6 +79,7 @@ public class QuestionManagerTest {
 		Question question = questionManager.getQuestion(1);
 		// assert the returned account contains what you expect given the state
 		// of the database
+		System.out.println("Got Question: " + question.toString());
 		assertNotNull("account should never be null", question);
 		assertEquals("wrong id",1, question.getId());
 		assertEquals("wrong question", "Please check to see if shes ready.", question.getQuestion());
@@ -83,7 +92,7 @@ public class QuestionManagerTest {
 		int before = questionManager.getSize();
 		System.out.println("Size before Insertion: " + before);
 		before++;
-		Question newQuestion = new Question(3,3,"The student union had a game room with six color TVs.", "B", "A//B");
+		Question newQuestion = new Question(100,3,"INSERT A NEW QUESTION TEXT", "ANSWER", "OPTIONS");
 		questionManager.addQuestion(newQuestion);
 		int after = questionManager.getSize();
 		System.out.println("Size after Insertion: " + after);
@@ -141,7 +150,7 @@ public class QuestionManagerTest {
 		// create a FactoryBean to help create a Hibernate SessionFactory
 		AnnotationSessionFactoryBean factoryBean = new AnnotationSessionFactoryBean();
 		factoryBean.setDataSource(createTestDataSource());
-		factoryBean.setAnnotatedClasses(new Class[]{Question.class});
+		factoryBean.setAnnotatedClasses(new Class[]{Question.class,Section.class, Instruction.class});
 		factoryBean.setHibernateProperties(createHibernateProperties());
 		// initialize according to the Spring InitializingBean contract
 		factoryBean.afterPropertiesSet();
@@ -173,6 +182,7 @@ public class QuestionManagerTest {
 		// issuing proper SQL)
 		properties.setProperty("hibernate.show_sql", "true");
 		properties.setProperty("hibernate.format_sql", "true");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		return properties;
 	}
 }

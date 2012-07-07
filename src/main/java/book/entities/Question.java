@@ -2,6 +2,7 @@ package book.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +16,10 @@ import book.entities.Section;
 @Entity
 @Table(name = "question")
 public class Question {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "question_id")
-	@JsonIgnore
+	@Column(name = "question_id", unique = true, nullable = false)
 	private int questionId;
 	@Column(name = "question_txt")
 	private String questionTxt;
@@ -26,18 +27,14 @@ public class Question {
 	private String questionAnswer;
 	@Column(name = "question_options")
 	private String questionOptions;
-	@Column(name = "section_id")
+	@Column(name = "section_id", insertable = false, updatable = false )
 	private int sectionId;
-//	@ManyToOne
-//	@JoinColumn(name="sectionId")
-//	private Section section;
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "section_id", nullable = false)
+	private Section section;
+
 
 	protected Question() {
-	}
-	public Question(Question newQuestion){
-		this.questionTxt = newQuestion.questionTxt;
-		this.questionAnswer = newQuestion.questionAnswer;
-		this.questionOptions = newQuestion.questionOptions;		
 	}
 	public Question( String question) {
 		this.questionTxt = question;
@@ -49,17 +46,18 @@ public class Question {
 		this.questionAnswer = questionAnswer;
 		this.questionOptions = questionOptions;
 	}
-	public Question(Integer sectionId, String questionTxt, String questionAnswer, String questionOptions ){
-		this.sectionId = sectionId;
-		this.questionTxt = questionTxt;
-		this.questionAnswer = questionAnswer;
-		this.questionOptions = questionOptions;
-	}
 	public int getId() {
 		return questionId;
 	}
 	public void setId(int id) {
 		this.questionId = id;
+	}
+	
+	public Section getSection() {
+		return this.section;
+	}
+	public void setSection(Section section) {
+		this.section = section;
 	}
 	public String getQuestion() {
 		return questionTxt;
@@ -88,15 +86,9 @@ public class Question {
 	}
 	public String toString(){
 		return "Question [questionId="+questionId+
-				", sectionId="+sectionId+
+				", section="+section.getSectionName()+
 				", questionTxt="+questionTxt+
 				", questionOptions="+questionOptions+
 				", questionAnswer="+questionAnswer+"]";
 	}
-//	public Section getSection() {
-//		return section;
-//	}
-//	public void setSection(Section section) {
-//		this.section = section;
-//	}
 }

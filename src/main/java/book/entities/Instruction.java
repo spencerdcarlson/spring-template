@@ -23,8 +23,7 @@ public class Instruction {
 	private String instructionName;
 	@Column(name = "instruction_txt")
 	private String instructionText;
-	
-	
+
 	public int getInstructionId() {
 		return instructionId;
 	}
@@ -47,6 +46,6 @@ public class Instruction {
 		return "Instruction [instructionId="+instructionId+
 				", instructionName="+instructionName+
 				", instructionText="+instructionText+"]";
-		}
-	
+	}
+
 }

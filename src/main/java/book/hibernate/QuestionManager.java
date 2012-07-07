@@ -35,7 +35,6 @@ public class QuestionManager implements EntityManagerInterface {
 
 	
 	public Question getQuestion(Integer id) {
-		System.out.println("GET QUESTION: " + id);
 		return (Question) getCurrentSession().load(Question.class, id);
 	}
 

@@ -66,31 +66,4 @@
 		</div><!-- navbar-inner -->
 	</div><!-- navbar navbar-fixed-top -->
 
-
-	
-		<!-- 
-	<nav>
-	
-	<table>
-	<c:forEach var="sec" items="${section}" varStatus="status">
-		<c:choose>
-			<c:when test="${ sec.sectionId == sec.parentId }">
-				<c:set var="parent" value="${sec.sectionId}" scope="page"></c:set>
-				<tr><td>Parent Node:</td><td>${sec.sectionName}</td></tr>
-			</c:when>
-			<c:when test="${sec.parentId == parent }">
-					<tr><td>Child Node:</td><td>${sec.sectionName}</td></tr>
-					<c:set var="parent" value="${sec.sectionId}" scope="page"></c:set>
-			</c:when>
-			
-		</c:choose>
-		<tr>
-		<td>Section Id: ${sec.sectionId}</td>
-		<td>Parent Id: ${sec.parentId}</td>
-		<td>Section Name: ${sec.sectionName}</td>
-		</tr>
-	</c:forEach>
-	</table>
-	</nav>
-	-->
 	

@@ -23,6 +23,7 @@ import org.springframework.web.context.ContextLoaderListener;
 
 import book.entities.Question;
 import book.hibernate.QuestionManager;
+import book.hibernate.SectionManager;
 
 /**
  * Handles requests for the application home page.
@@ -31,7 +32,9 @@ import book.hibernate.QuestionManager;
 public class Insert {
 
 	@Autowired
-	private QuestionManager questionManager;	
+	private QuestionManager questionManager;
+	@Autowired
+	private SectionManager sectionManager;
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 	private int current = 1;
 
@@ -49,8 +52,8 @@ public class Insert {
 			@RequestParam("sectionId") String sectionId,  Model model){
 		try{
 			Integer sId = Integer.parseInt(sectionId);
-			Question newQuestion = new Question(sId,question,answer,options);
-			questionManager.addQuestion(newQuestion);
+			//Question newQuestion = new Question(null,sId,question,answer,options);
+			//questionManager.addQuestion(newQuestion);
 		}catch(NumberFormatException e) {
 			System.out.println("New question wasn't inserted into the DB: " + e);
 		}

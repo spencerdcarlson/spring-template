@@ -2,10 +2,10 @@ package book.entities;
 
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,44 +13,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "section")
 public class Section {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "section_id")
-	@JsonIgnore
+	@Column(name = "section_id", unique = true, nullable = false)
 	private int sectionId;
-	@Column(name = "parent_id")
-	private String parentId;
 	@Column(name = "section_name")
 	private String sectionName;
-	@Column(name = "instruction_id")
-	private String instructionId;
+	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@JoinColumn(name="instruction_id")
+	private Instruction instruction;
 	@Column(name = "has_child")
-	private int hasChild;
-	@Transient
-	public List<Section> children;
-	@OneToMany(mappedBy="section", cascade = CascadeType.ALL)
-	public List<Question> questions;
-	@Transient
-	public Instruction instruction;
-	
+	private int hasChild; 
+	@OneToMany(mappedBy="section")
+	private List<Question> questions;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="parent_id")
+	private List<Section> children;
+
 	public int getSectionId() {
 		return sectionId;
 	}
 	public void setSectionId(int sectionId) {
 		this.sectionId = sectionId;
-	}
-	public String getParentId() {
-		return parentId;
-	}
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
 	}
 	public String getSectionName() {
 		return sectionName;
@@ -58,36 +46,39 @@ public class Section {
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
 	}
-	public String getInstructionId() {
-		return instructionId;
+	public Instruction getInstruction() {
+		return instruction;
 	}
-	public void setInstructionId(String instructionId) {
-		this.instructionId = instructionId;
+	public void setInstruction(Instruction instruction) {
+		this.instruction = instruction;
 	}
-	
-	public void addChild(Section section){
-		this.children.add(section);
-	}
-	
 	public int getHasChild() {
 		return hasChild;
 	}
 	public void setHasChild(int hasChild) {
 		this.hasChild = hasChild;
 	}
-	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+	public List<Section> getChildren() {
+		return this.children;
+	}
 	public String toString(){
-		return "Section [sectionId="+sectionId+
-				", parentId="+parentId+
-				", sectionName="+sectionName+
-				", instructionId="+instructionId+
-				", questions="+questions+
-				", instruction="+instruction+
-				", children="+children+"]";
+		String childList = "";
+		for (Section s: children ) {
+			childList += s.getSectionName() + ",\n";
 		}
-	
-	
-
-
+		String instructionInfo = "NULL";
+		if (instruction != null){
+			instructionInfo = this.instruction.toString();	
+		}
+		return "Section [sectionId="+sectionId+
+				", sectionName="+sectionName+
+				", instruction="+instructionInfo+
+				", children="+childList + "]";
+	}
 }
-	

@@ -47,23 +47,18 @@ public class Home {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! the client locale is "+ locale.toString());
+		List<Section> nav = sectionManager.getSection(1).getChildren();
+		
 		List<Section> allSections = sectionManager.getAllSections();
 		Section topNode = sectionManager.getSection(1);
-		List<Section> mainChildren = sectionManager.getChildren(topNode);
-		//String json = sectionManager.getJSONChildren(topNode);
-		//System.out.println(json);
-		
+	
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-//		for (Question q: sectionManager.getSection(3).questions) {
-//			System.out.println("Question: " + q.toString());
-//		}
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("section", allSections);
+		model.addAttribute("nav", nav);
 		model.addAttribute("topNode", topNode);
-		model.addAttribute("mainChildren", mainChildren);
+		model.addAttribute("section", allSections);
 		model.addAttribute("serverTime", formattedDate );
 		
 		
