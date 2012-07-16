@@ -34,6 +34,7 @@
 				<value>book.entities.Section</value>
 				<value>book.hibernate.SectionManager</value>
 				<value>book.entities.Instruction</value>
+				<value>book.entities.Resource</value>
 				<!-- ADD CLASSES <value>new.class</value> -->
 			</list>
 		</property>
@@ -46,7 +47,7 @@
       <property name="properties">
          <props>
             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-            <prop key="hibernate.hbm2ddl.auto">create</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
          </props>
       </property>
    </bean>

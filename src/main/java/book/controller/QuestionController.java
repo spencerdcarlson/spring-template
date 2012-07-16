@@ -14,11 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import book.entities.Question;
+import book.entities.Resource;
 import book.entities.Section;
 import book.hibernate.QuestionManager;
 import book.hibernate.SectionManager;
@@ -47,8 +49,8 @@ public class QuestionController {
 		size = questionManager.getSize();
 		if ( current > size ) current = 1;		
 		Question question = questionManager.getQuestion(current);		
-		String[] questionTxt = question.getQuestion().split("//");
-		String[] questionOptions = question.getOptions().split("//");
+		String[] questionTxt = question.getQuestionTxt().split("//");
+		String[] questionOptions = question.getQuestionOptions().split("//");
 		model.addAttribute("questionTxt",questionTxt);
 		model.addAttribute("questionOptions",questionOptions);
 		model.addAttribute("question", question);
@@ -63,8 +65,8 @@ public class QuestionController {
 		current--;
 		if ( current < 1 ) current = size;
 		Question question = questionManager.getQuestion(current);
-		String[] questionTxt = question.getQuestion().split("//");
-		String[] questionOptions = question.getOptions().split("//");
+		String[] questionTxt = question.getQuestionTxt().split("//");
+		String[] questionOptions = question.getQuestionOptions().split("//");
 		model.addAttribute("questionTxt",questionTxt);
 		model.addAttribute("questionOptions",questionOptions);
 		model.addAttribute("question", question);
@@ -72,13 +74,29 @@ public class QuestionController {
 		return "question";
 	}
 
-	@RequestMapping(value = "/section", method = RequestMethod.GET)
+	@RequestMapping(value = "/section", method = RequestMethod.POST)
 	public String getSection(@RequestParam("id") String id, Model model){
-		System.out.println("id: " +id);
+//		System.out.println("id: " +id);
 		int Id = Integer.parseInt(id);
+		Section sec = sectionManager.getSection(Id);
+		List<Section> children = sectionManager.getSection(Id).getChildren();
+		List<Resource> resources = sec.getResources();
+		model.addAttribute("children", children);
+		model.addAttribute("section",sec);
+		model.addAttribute("resources",resources);
+		return "section";
+	}
+	
+	@RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
+	public String getResult(@PathVariable("id") String id, @RequestParam("answers") String[] answers, Model model){
+//		System.out.println("id: " +id);
+		int Id = Integer.parseInt(id);
+		Section sec = sectionManager.getSection(Id);
 		List<Section> children = sectionManager.getSection(Id).getChildren();
 		model.addAttribute("children", children);
-		return "section";
+		model.addAttribute("answers", answers);
+		model.addAttribute("section",sec);
+		return "result";
 	}
 
 	@RequestMapping(value = "/section/json", method = RequestMethod.GET)

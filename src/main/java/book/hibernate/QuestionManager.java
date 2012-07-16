@@ -44,13 +44,13 @@ public class QuestionManager implements EntityManagerInterface {
 	
 	public void updateQuestion(Integer questionId, String question, String answer, String options) {
 		Question questionUpdate = getQuestion(questionId);
-		if (question != null) questionUpdate.setQuestion(question);
-		if (answer != null) questionUpdate.setAnswer(answer);
-		if (options != null) questionUpdate.setOptions(options);
+		if (question != null) questionUpdate.setQuestionTxt(question);
+		if (answer != null) questionUpdate.setQuestionAnswer(answer);
+		if (options != null) questionUpdate.setQuestionOptions(options);
 	}
 
 	public void addQuestion(Question newQuestion ){
-		System.out.println("INSERT NEW QUESTINO: " + newQuestion.toString());
+		System.out.println("INSERT NEW QUESTION: " + newQuestion.toString());
 		getCurrentSession().save(newQuestion);
 	}
 

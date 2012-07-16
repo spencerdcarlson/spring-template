@@ -1,5 +1,5 @@
 <footer>
-	<p>© Company 2012</p>
+	<p></p>
 </footer>
 
 </div>

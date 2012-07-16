@@ -1,6 +1,5 @@
 package book.entities;
 
-
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,6 +32,8 @@ public class Section {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="parent_id")
 	private List<Section> children;
+	@OneToMany(mappedBy="section")
+	private List<Resource> resources;
 
 	public int getSectionId() {
 		return sectionId;
@@ -66,6 +67,13 @@ public class Section {
 	}
 	public List<Section> getChildren() {
 		return this.children;
+	}
+
+	public List<Resource> getResources(){
+		return resources;
+	}
+	public void setResources(List<Resource> res){
+		resources = res;
 	}
 	public String toString(){
 		String childList = "";

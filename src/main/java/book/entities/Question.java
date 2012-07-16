@@ -1,17 +1,18 @@
 package book.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import book.entities.Section;
+//import book.entities.Section;
 
 @Entity
 @Table(name = "question")
@@ -27,11 +28,14 @@ public class Question {
 	private String questionAnswer;
 	@Column(name = "question_options")
 	private String questionOptions;
-	@Column(name = "section_id", insertable = false, updatable = false )
-	private int sectionId;
+//	@Column(name = "section_id", insertable = false, updatable = false )
+//	private int sectionId;
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "section_id", nullable = false)
 	private Section section;
+	@Column(name = "reference")
+	private String reference;
+	
 
 
 	protected Question() {
@@ -39,17 +43,17 @@ public class Question {
 	public Question( String question) {
 		this.questionTxt = question;
 	}
-	public Question(Integer questionId, Integer sectionId, String questionTxt, String questionAnswer, String questionOptions ){
+	public Question(Integer questionId, Section section, String questionTxt, String questionAnswer, String questionOptions ){
 		this.questionId = questionId;
-		this.sectionId = sectionId;
+		this.section = section;
 		this.questionTxt = questionTxt;
 		this.questionAnswer = questionAnswer;
 		this.questionOptions = questionOptions;
 	}
-	public int getId() {
+	public int getQuestionId() {
 		return questionId;
 	}
-	public void setId(int id) {
+	public void setQuestionId(int id) {
 		this.questionId = id;
 	}
 	
@@ -59,31 +63,37 @@ public class Question {
 	public void setSection(Section section) {
 		this.section = section;
 	}
-	public String getQuestion() {
+	public String getQuestionTxt() {
 		return questionTxt;
 	}
-	public void setQuestion(String question) {
+	public void setQuestionTxt(String question) {
 		this.questionTxt = question;
 	}
-	public String getAnswer() {
+	public String getQuestionAnswer() {
 		return questionAnswer;
 	}
-	public void setAnswer(String answer) {
+	public void setQuestionAnswer(String answer) {
 		this.questionAnswer = answer;
 	}
-	public String getOptions() {
+	public String getQuestionOptions() {
 		return questionOptions;
 	}
-	public void setOptions(String options) {
+	public void setQuestionOptions(String options) {
 		this.questionOptions = options;
 	}
+	public String getReference(){
+		return reference;
+	}
+	public void setReference(String ref){
+		reference = ref;
+	}
 
-	public int getSectionId() {
-		return sectionId;
-	}
-	public void setSectionId(int sectionId) {
-		this.sectionId = sectionId;
-	}
+//	public int getSectionId() {
+//		return sectionId;
+//	}
+//	public void setSectionId(int sectionId) {
+//		this.sectionId = sectionId;
+//	}
 	public String toString(){
 		return "Question [questionId="+questionId+
 				", section="+section.getSectionName()+

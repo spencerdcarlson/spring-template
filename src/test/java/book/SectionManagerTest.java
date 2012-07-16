@@ -28,31 +28,31 @@ public class SectionManagerTest {
 	private PlatformTransactionManager transactionManager;
 	private TransactionStatus transactionStatus;
 
-	@Before
-	public void setUp() throws Exception {
-		// setup the repository to test
-		SessionFactory sessionFactory = createTestSessionFactory();
-		sectionManager = new SectionManager();
-		sectionManager.setSession(sessionFactory);
-		transactionManager = new HibernateTransactionManager(sessionFactory);
-		transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
-	}
-
-	@Test
-	public void testGetAllSections() {
-		List<Section> sections = sectionManager.getAllSections();
-		// Size should match number of inserts in mysql_test-data
-		assertEquals("Wrong number of questions", 7, sections.size());
-	}
-	
-	@Test
-	public void testGetSection() {
-		Section section = sectionManager.getSection(1);
-		assertNotNull("account should never be null", section);
-		assertEquals("wrong id",1, section.getSectionId());
-		assertEquals("wrong Section Name", "Reading Writing Center", section.getSectionName());
-		assertEquals("wrong has child value",1, section.getHasChild());
-	}
+//	@Before
+//	public void setUp() throws Exception {
+//		// setup the repository to test
+//		SessionFactory sessionFactory = createTestSessionFactory();
+//		sectionManager = new SectionManager();
+//		sectionManager.setSession(sessionFactory);
+//		transactionManager = new HibernateTransactionManager(sessionFactory);
+//		transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+//	}
+//
+//	@Test
+//	public void testGetAllSections() {
+//		List<Section> sections = sectionManager.getAllSections();
+//		// Size should match number of inserts in mysql_test-data
+//		assertEquals("Wrong number of questions", 7, sections.size());
+//	}
+//	
+//	@Test
+//	public void testGetSection() {
+//		Section section = sectionManager.getSection(1);
+//		assertNotNull("account should never be null", section);
+//		assertEquals("wrong id",1, section.getSectionId());
+//		assertEquals("wrong Section Name", "Reading Writing Center", section.getSectionName());
+//		assertEquals("wrong has child value",1, section.getHasChild());
+//	}
 	
 	private SessionFactory createTestSessionFactory() throws Exception {
 		// create a FactoryBean to help create a Hibernate SessionFactory

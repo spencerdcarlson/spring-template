@@ -1,15 +1,15 @@
 <jsp:directive.include file="/WEB-INF/views/header.jsp" />
 
 <div class="container-fluid">
-      <div class="row-fluid">
-        
-        <div class="span3">
-          <div class="well sidebar-nav">
-           <ul class="nav nav-list">
-              <!-- Nav Items -->
-              <li class="nav-header">Quizes</li>
+	<div class="row-fluid">
 
-              <!-- 
+		<div class="span3">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<!-- Nav Items -->
+					<li class="nav-header"><a href="">Microlab Quizzes</a></li>
+
+					<!-- 
               <li class="dropdown active" id="menu1">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
                 Microlab 1A Quiz - Apostrophes
@@ -21,32 +21,42 @@
                 </ul>
               </li>
               -->
-              <c:forEach var="section" items="${nav}" varStatus="status">
-              <li><a onclick="mainNavigation(this.id);" id="${section.sectionId}" >${section.sectionName}</a></li>
-              </c:forEach>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span3-->
-        
-        <div class="span9">
-          <div id="lesson" class="hero-unit">
-          
-            <h1>Quiz Instruction</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a class="btn btn-primary btn-large">Learn more »</a></p>
-            
-          </div><!--  -->
-          <section id="questions"></section>
-          </div><!--/span9-->
-          
-      </div><!--/row-->
-      
-      </div>
-    
+					<c:forEach var="section" items="${nav}" varStatus="status">
+						<li><a onclick="mainNavigation(this.id);"
+							id="${section.sectionId}">${section.sectionName}</a></li>
+					</c:forEach>
+				</ul>
+			</div>
+			<!--/.well -->
+		</div>
+		<!--/span3-->
 
-      <hr>
-      
-      
+		<div class="span9">
+			<div id="lesson" class="hero-unit">
+
+				<!--  <h1>Quiz Instruction</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <p><a class="btn btn-primary btn-large">Learn more</a></p>
+            -->
+				<section id="questions">
+					<h1>Microlab</h1>
+					<img
+						src="http://readingwritingcenter.byuh.edu/sites/readingwritingcenter.byuh.edu/files/u390/RWC%20front.jpg" />
+
+				</section>
+			</div>
+		</div>
+		<!--/span9-->
+
+	</div>
+	<!--/row-->
+
+</div>
+
+
+<hr>
+
+<!-- 
 <section>
 	<h1>Application Launch</h1>
 	<p>The time on the server is ${serverTime}.</p>
@@ -60,3 +70,4 @@
 	<button id='new' type='button'>New</button>
 </section>
 <jsp:directive.include file="/WEB-INF/views/footer.jsp" />
+ -->

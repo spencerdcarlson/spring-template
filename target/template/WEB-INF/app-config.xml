@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+							http://www.springframework.org/schema/jdbc
+							http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- The configuration of the account manager application. -->
+	<context:annotation-config />
+
+	<!-- The Question manager service that can load questions from the database -->
+	<bean id="questionManager" class="book.hibernate.QuestionManager"></bean>
+	<!-- The Section manager service that can load sections from the database -->
+	<bean id="sectionManager" class="book.hibernate.SectionManager"></bean>
+
+	<!-- A Hibernate SessionFactory for mapping Accounts and Beneficiaries from 
+		object to relation tables -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>book.entities.Question</value>
+				<value>book.hibernate.QuestionManager</value>
+				<value>book.entities.Section</value>
+				<value>book.hibernate.SectionManager</value>
+				<value>book.entities.Instruction</value>
+				<!-- ADD CLASSES <value>new.class</value> -->
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<ref bean="hibernateSettings" />
+		</property>
+	</bean>
+	
+	<bean id="hibernateSettings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+      <property name="properties">
+         <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.hbm2ddl.auto">create</prop>
+         </props>
+      </property>
+   </bean>
+
+	<!-- Creates a MySQL Datasource and populates test data to it -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_center" />
+
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/dyad_book" 
+			/> -->
+		<property name="username" value="spring" />
+		<property name="password" value="spring" />
+	</bean>
+
+	<jdbc:initialize-database data-source="dataSource"
+		enabled="false">
+
+		<jdbc:script location="classpath:test/db/mysql_schema.sql" />
+		<jdbc:script location="classpath:test/db/mysql_data.sql" />
+	</jdbc:initialize-database>
+
+</beans>
