@@ -1,7 +1,4 @@
 $(document).ready(function() {  
-	$('header').click(function() {
-		alert("JQuery Enabled: You Clicked the Header");
-	});
 	$('#next').click(function() {
 		$('#content').load(window.location+'next');
 	});
@@ -28,7 +25,16 @@ $(document).ready(function() {
 	});
 
 });
-
+function clikedAnswer(questionid, optionid, value) {
+	
+	//alert("Clicked Answer: " + questionid + " SubId: " + optionid + " Value: " + value);
+	var span = $(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']");
+	span.hide();
+	span.html(value);
+	span.fadeIn(2000);
+	
+	//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
+}
 function mainNavigation(id){
 //	$.get(window.location+'section', {id: id}, function(data){
 //		$('#questions').html(data);
