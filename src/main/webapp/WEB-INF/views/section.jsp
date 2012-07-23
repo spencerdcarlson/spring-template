@@ -14,28 +14,41 @@
 			<h2 class="sectionTitle">${child.sectionName}</h2>
 			<p class="sectionInstructions"></p>
 			<ol>
-				<c:forEach var="question" items="${child.questions}"
-					varStatus="status">
-					<li>
-					<table><tr>
+			<c:forEach var="question" items="${child.questions}" varStatus="status">
+				<li><table>
+					<tr>
 					<td width="500px">
+						
 						<c:forEach var="quest" items="${fn:split(question.questionTxt, '//')}" varStatus="stat">
 							${quest}
-							<c:if test="${stat.count!=fn:length(child.questions)}"><span class="answers" data-questionid="${question.questionId}" data-optionid="${stat.count}">____</span>
+							<c:if test="${ stat.count != fn:length(fn:split(question.questionTxt,'//')) || fn:length(fn:split(question.questionTxt,'//')) == 1 }">
+								<span class="answers" data-questionid="${question.questionId}" data-optionid="${stat.count}">____</span>
 							</c:if>
 						</c:forEach>
+						
 					</td>
 					<td>(${question.reference})</td>
-					</tr></table>
-					</li>
-
-					<ol style="list-style-type:none">
-						<c:forEach var="option"
-							items="${fn:split(question.questionOptions, '//')}" varStatus="stat">
-							<!-- DATA-OPTION needs to be a group id it can't be based off of stat.count -->
-							<li><input type="radio" class ="answer" name="answer" data-questionid="${question.questionId}" data-optionid="1" value="${option}" onClick="clikedAnswer(this.getAttribute('data-questionid'),this.getAttribute('data-optionid'),this.value);" /> ${option} </li>
+					</tr>
+					<tr>
+					
+					
+					<c:set var="groupId" value="${1}" />
+						<td>
+						<c:forEach var="option" items="${fn:split(question.questionOptions, '//')}" varStatus="stat">
+							<c:choose>
+								<c:when test="${stat.count % 2 == 0 }" >
+									<input type="radio" class ="answer" name="answer${groupId}" data-questionid="${question.questionId}" data-optionid="${groupId}" value="${option}" onClick="clikedAnswer(this.getAttribute('data-questionid'),this.getAttribute('data-optionid'),this.value);" /> ${option}
+									<c:set var="groupId" value="${groupId + 1 }"/>
+									</td><td>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" class ="answer" name="answer${groupId}" data-questionid="${question.questionId}" data-optionid="${groupId}" value="${option}" onClick="clikedAnswer(this.getAttribute('data-questionid'),this.getAttribute('data-optionid'),this.value);" /> ${option}
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
-					</ol>
+						</td>
+			</tr>
+			</table></li>
 				</c:forEach>
 			</ol>
 		</div>
