@@ -41,6 +41,8 @@ function mainNavigation(id){
 	$('#questions').load(window.location+'section', {id: id});
 }
 function startQuiz(id){
-	alert(id);
+	$("section[data-quiz='"+id+"']").removeClass('hide');
+	$("button[data-quiz='"+id+"']").fadeOut('fast');
+	
 }
 

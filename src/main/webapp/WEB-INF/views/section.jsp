@@ -26,8 +26,8 @@
 			<h2 class="sectionTitle">${child.sectionName}</h2>
 			<p class="sectionInstructions"></p>
 			
-			<a id="${status.count}" onClick="startQuiz(this.id);" class="btn btn-success">Start Quiz</a>
-			<section id="${status.count}" class="quizbody" style="display: none;">
+			<button data-quiz="${status.count}" onClick="startQuiz(this.getAttribute('data-quiz'));" class="btn btn-success">Start Quiz</button>
+			<section data-quiz="${status.count}" class="quizbody hide">
 			<ol>
 			<c:forEach var="question" items="${child.questions}" varStatus="status">
 				
