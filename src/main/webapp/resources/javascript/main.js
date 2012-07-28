@@ -42,6 +42,5 @@ function mainNavigation(id){
 }
 function startQuiz(id){
 	alert(id);
-	$('#'+id+'').show();
 }
 
