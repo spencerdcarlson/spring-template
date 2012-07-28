@@ -12,6 +12,8 @@ $(document).ready(function() {
 	$('#submit-answer').click(function(){
 		var questNum = $("input:radio").length/2;
 		var answers = new Array();
+		alert("questNum: "+ questNum);
+		alert("number of radio btns: "+ $("input:radio:checked").length);
 		if($("input:radio:checked").length != questNum){
 			alert("Please answer all the questions!");
 		}else{
@@ -31,14 +33,15 @@ function clikedAnswer(questionid, optionid, value) {
 	var span = $(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']");
 	span.hide();
 	span.html(value);
-	span.fadeIn(2000);
+	span.fadeIn('fast');
 	
 	//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
 }
 function mainNavigation(id){
-//	$.get(window.location+'section', {id: id}, function(data){
-//		$('#questions').html(data);
-//	});
-	
 	$('#questions').load(window.location+'section', {id: id});
 }
+function startQuiz(id){
+	alert(id);
+	$('#'+id+'').show();
+}
+
