@@ -44,5 +44,6 @@ function startQuiz(id){
 	$("section[data-quiz='"+id+"']").removeClass('hide');
 	$("button[data-quiz='"+id+"']").fadeOut('fast');
 	
+	
 }
 
