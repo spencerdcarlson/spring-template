@@ -22,7 +22,7 @@ $(document).ready(function() {
 				answers[i] = $(this).val();
 				i++;
 			});
-			$('#questions').load(window.location+'result/'+$("#sectionId").val(), 'answers='+answers);
+			$('#questions').load('/edu/result/'+$("#sectionId").val(), 'answers='+answers);
 		}
 	});
 
@@ -36,6 +36,10 @@ function clikedAnswer(questionid, optionid, value) {
 	span.html(value);
 	span.fadeIn('fast');
 	
+<<<<<<< HEAD
+	$('#questions').load('/edu/section/'+id);
+}
+=======
 	//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
 }
 function mainNavigation(id){
@@ -64,3 +68,4 @@ function submitQuiz(quizId){
 	
 }
 
+>>>>>>> 9b1ab2587255805efd1cd1b4f099845cb2460503

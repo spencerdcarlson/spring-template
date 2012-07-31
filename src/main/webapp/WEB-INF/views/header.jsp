@@ -48,13 +48,13 @@
 					Center</a>
 				<div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="">
-						<i class="icon-user"></i> Username <span class="caret"></span>
+						<i class="icon-user"></i> ${username} <span class="caret"></span>
 					</a>
-					<ul class="dropdown-menu">
+					<!-- <ul class="dropdown-menu">
 						<li><a href="">Section 1</a></li>
 						<li class="divider"></li>
 						<li><a href="">Section 2</a></li>
-					</ul>
+					</ul> -->
 				</div><!-- btn-group pull right -->
 				<div class="nav-collapse">
 					<ul class="nav">

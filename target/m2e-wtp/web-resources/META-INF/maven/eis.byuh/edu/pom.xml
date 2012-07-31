@@ -30,6 +30,8 @@
 		<commons-pool-version>1.5.4</commons-pool-version>
 		<org.cloudfoundry-version>0.6.1</org.cloudfoundry-version>
 		<org.jasig.cas.client-version>3.1.10</org.jasig.cas.client-version>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<env>local</env>
 	</properties>
 
 	<!-- JSR 303 with Hibernate Validator -->
@@ -239,6 +241,37 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- Spring Security Dependencies -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas-client</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -270,6 +303,8 @@
 		</repository>
 	</repositories>
 
+	
+
 	<!-- For Hibernate Validator -->
 	<!-- <repositories> <repository> <id>org.jboss.repository.release</id> <name>JBoss 
 		Maven Release Repository</name> <url>https://repository.jboss.org/nexus/content/repositories/releases</url> 
@@ -277,9 +312,9 @@
 	<build>
 		<plugins>
 			<!-- hibernate3:hbm2ddl for building and inserting db from DAO -->
-			
 
-			
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -300,7 +335,30 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
+			<plugin>
+	    <groupId>org.apache.maven.plugins</groupId> 
+	    <artifactId>maven-war-plugin</artifactId>
+	    <configuration>
+	        <filters>
+	            <filter>src/main/filters/${env}.properties</filter>
+	        </filters>
+	        <webResources>
+	            <resource>
+	                <filtering>true</filtering>
+	                <directory>src/main/webapp</directory>
+	                <includes>
+	                    <include>WEB-INF/spring/security-context.xml</include>
+	                    <include>WEB-INF/spring/app-config.xml</include>
+	                </includes>
+	            </resource>
+	        </webResources>
+	    </configuration>
+	</plugin>
 		</plugins>
 		<finalName>${project.name}</finalName>
+		<!-- Specify filter folder -->
+		<filters>
+			<filter>src/main/filters/${env}.properties</filter>
+		</filters>
 	</build>
 </project>

@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
@@ -48,7 +50,7 @@ public class Home {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome home! the client locale is "+ locale.toString());
 		List<Section> nav = sectionManager.getSection(1).getChildren();
 		
@@ -58,11 +60,12 @@ public class Home {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
-		
+		String username = request.getUserPrincipal().getName();
 		model.addAttribute("nav", nav);
 		model.addAttribute("topNode", topNode);
 		model.addAttribute("section", allSections);
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("username", username);
 		
 		
 		return "index";
