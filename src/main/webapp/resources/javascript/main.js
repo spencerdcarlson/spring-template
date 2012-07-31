@@ -35,15 +35,13 @@ function clikedAnswer(questionid, optionid, value) {
 	span.hide();
 	span.html(value);
 	span.fadeIn('fast');
-	
-<<<<<<< HEAD
-	$('#questions').load('/edu/section/'+id);
+
 }
-=======
-	//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
-}
+
+//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
+
 function mainNavigation(id){
-	$('#questions').load(window.location+'section', {id: id});
+	$('#questions').load(window.location+'section/'+id);
 }
 function startQuiz(id){
 	$("section[data-quiz='"+id+"']").removeClass('hide');
@@ -68,4 +66,3 @@ function submitQuiz(quizId){
 	
 }
 
->>>>>>> 9b1ab2587255805efd1cd1b4f099845cb2460503

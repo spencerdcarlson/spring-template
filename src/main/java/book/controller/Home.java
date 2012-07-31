@@ -41,8 +41,6 @@ public class Home {
 	
 	@Autowired
 	private SectionManager sectionManager;
-	@Autowired
-	private UserManager userManager;
 	private static final Logger logger = LoggerFactory.getLogger(Home.class);
 	
 	
