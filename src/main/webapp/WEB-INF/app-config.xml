@@ -21,6 +21,8 @@
 	<bean id="questionManager" class="book.hibernate.QuestionManager"></bean>
 	<!-- The Section manager service that can load sections from the database -->
 	<bean id="sectionManager" class="book.hibernate.SectionManager"></bean>
+	<!-- The user manager service that can load users from the database -->
+	<bean id="userManager" class="book.hibernate.UserManager"></bean>
 
 	<!-- A Hibernate SessionFactory for mapping Accounts and Beneficiaries from 
 		object to relation tables -->
@@ -35,6 +37,7 @@
 				<value>book.hibernate.SectionManager</value>
 				<value>book.entities.Instruction</value>
 				<value>book.entities.Resource</value>
+				<value>book.entities.User</value>
 				<!-- ADD CLASSES <value>new.class</value> -->
 			</list>
 		</property>
@@ -57,7 +60,7 @@
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_center" />
+			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_test" />
 
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/dyad_book" 
 			/> -->

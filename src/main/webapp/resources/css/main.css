@@ -59,7 +59,11 @@ header p {
 	margin: -350px 0 0 0;
 	left: 10%;
 }
-
+#submitModal {
+	width: 400px;
+	height: 200px;
+	margin: -350px 0 0 100px; 
+}
 .answers{
 	font-weight: bold;
 	text-decoration: underline;	

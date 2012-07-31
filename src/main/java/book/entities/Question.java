@@ -28,8 +28,6 @@ public class Question {
 	private String questionAnswer;
 	@Column(name = "question_options")
 	private String questionOptions;
-//	@Column(name = "section_id", insertable = false, updatable = false )
-//	private int sectionId;
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "section_id", nullable = false)
 	private Section section;

@@ -9,7 +9,7 @@ $(document).ready(function() {
 		alert("Submited!!!");
 		$('#content').load(window.location+'new');
 	});
-	$('#submit-answer').click(function(){
+	$('#sbmit-answer').click(function(){
 		var questNum = $("input:radio").length/2;
 		var answers = new Array();
 		alert("questNum: "+ questNum);
@@ -31,6 +31,7 @@ function clikedAnswer(questionid, optionid, value) {
 	
 	//alert("Clicked Answer: " + questionid + " SubId: " + optionid + " Value: " + value);
 	var span = $(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']");
+	span.attr("data-answerd","true");
 	span.hide();
 	span.html(value);
 	span.fadeIn('fast');
@@ -43,7 +44,23 @@ function mainNavigation(id){
 function startQuiz(id){
 	$("section[data-quiz='"+id+"']").removeClass('hide');
 	$("button[data-quiz='"+id+"']").fadeOut('fast');
-	
+}
+function submitQuiz(quizId){
+	var numQuestions = $(".answers[data-quizid='"+quizId+"']").length;
+	var unanswerd = $(".answers[data-quizid='"+quizId+"'][data-answerd='false']").length;
+	var answerd = $(".answers[data-quizid='"+quizId+"'][data-answerd='true']").length;
+	//alert("Quiz: "+quizId+" unanswerd: "+unanswerd+" Answerd: "+answerd); 
+	if (numQuestions == answerd){
+		var msg = "Congradulations";
+		$("#submitResult").html(msg);
+		//alert("move on");
+	}else {
+		var msg = "You left "+unanswerd+" question(s) unanswerd. Do you wish to submit anyway?";
+		//alert("You left "+unanswerd+" question(s) unanswerd. Do you wish to submit anyway?");
+		$("#submitResult").html(msg);
+		
+	}
+	$("#submitModal").modal('toggle');
 	
 }
 

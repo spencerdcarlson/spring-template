@@ -28,6 +28,7 @@ import org.json.simple.JSONObject;
 import book.entities.Question;
 import book.entities.Section;
 import book.hibernate.SectionManager;
+import book.hibernate.UserManager;
 
 /**
  * Handles requests for the application home page.
@@ -38,7 +39,9 @@ public class Home {
 	
 	@Autowired
 	private SectionManager sectionManager;
-		private static final Logger logger = LoggerFactory.getLogger(Home.class);
+	@Autowired
+	private UserManager userManager;
+	private static final Logger logger = LoggerFactory.getLogger(Home.class);
 	
 	
 	/**

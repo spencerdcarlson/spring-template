@@ -18,7 +18,6 @@ public class Resource {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "resource_id")
-	@JsonIgnore
 	private int resourceId;
 	@Column(name = "resource_type")
 	private String resourceType;

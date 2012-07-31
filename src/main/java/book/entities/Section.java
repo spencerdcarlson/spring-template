@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,7 +36,8 @@ public class Section {
 	private List<Section> children;
 	@OneToMany(mappedBy="section")
 	private List<Resource> resources;
-
+	
+	
 	public int getSectionId() {
 		return sectionId;
 	}

@@ -15,7 +15,6 @@ public class Instruction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "instruction_id")
-	@JsonIgnore
 	private int instructionId;
 	@Column(name = "instruction_name")
 	private String instructionName;
