@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"> 
+
+
+    <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+        <sec:filter-chain-map path-type="ant">
+            <sec:filter-chain pattern="/static/**" filters="none" />
+            <sec:filter-chain pattern="/resources/**" filters="none" />
+            <!-- <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" /> -->
+           
+          <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,logoutFilter"/>
+            <!--   <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,j2eePreAuthFilter,logoutFilter,etf,fsi"/> -->
+             <!-- filters="none" -->
+        </sec:filter-chain-map>
+    </bean>
+
+    <bean id="sif" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="preAuthAuthProvider"/>
+    </sec:authentication-manager>
+
+     <bean id="preAuthAuthProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+        <property name="preAuthenticatedUserDetailsService">
+            <bean id="userDetailsServiceWrapper" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+                <property name="userDetailsService" ref="studentlifeUserDetailsService"/> 
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="preAuthEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
+
+    <bean id="j2eePreAuthFilter" class="org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationDetailsSource">
+            <bean class="org.springframework.security.web.authentication.WebAuthenticationDetailsSource" />
+        </property>
+    </bean>
+
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="http://cas.byuh.edu/cas/logout"/>
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="servletContext" class="org.springframework.web.context.support.ServletContextFactoryBean"/>
+
+    <bean id="etf" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint" ref="preAuthEntryPoint"/>
+    </bean>
+
+    <bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <ref bean="roleVoter"/>
+				<ref bean="expressionVoter"/>
+                <!-- <ref bean="studentlifeVoter"/> -->
+            </list>
+        </property>
+    </bean>
+    
+
+   <bean id="fsi" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="httpRequestAccessDecisionManager"/>
+        <property name="securityMetadataSource">
+            <sec:filter-invocation-definition-source>
+                <sec:intercept-url pattern="/**" access="ROLE_BASIC"/>
+            </sec:filter-invocation-definition-source>
+        </property>
+    </bean>
+
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter"/>
+
+    <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter"/>
+
+    <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator" id="ticketValidator">
+        <constructor-arg index="0" value="https://cas.byuh.edu/cas" />
+        <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
+        <property name="proxyCallbackUrl" value="http://localhost:8080/notes/home" />
+        <property name="renew" value="true"/>
+    </bean>
+
+    <bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl" />
+
+	<bean id="studentlifeUserDetailsService" class="book.auth.StudentlifeUserDetailsService"/>
+
+    <bean id="casAuthenticationFilter" class="org.jasig.cas.client.authentication.AuthenticationFilter">
+        <property name="casServerLoginUrl" value="https://cas.byuh.edu/cas/login" />
+        <property name="serverName" value="http://localhost:8080" />
+        <!-- <property name="serverName" value="localhost:8080" /> -->
+        <property name="renew" value="true"/>
+    </bean>
+
+    <bean id="casValidationFilter" class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">
+        <property name="serverName" value="http://localhost:8080" />
+        <!-- <property name="serverName" value="localhost:8080" /> -->
+        <property name="exceptionOnValidationFailure" value="true" />
+        <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
+        <property name="redirectAfterValidation" value="true" />
+        <property name="ticketValidator" ref="ticketValidator" />
+        <property name="proxyReceptorUrl" value="/secure/receptor" />
+    </bean>
+
+    <bean id="wrappingFilter" class="org.jasig.cas.client.util.HttpServletRequestWrapperFilter" />
+
+    <bean class="org.springframework.security.web.access.expression.WebExpressionVoter" id="expressionVoter">
+		<property name="expressionHandler" ref="expressionHandler"/>
+    </bean>
+
+	
+
+	<bean id="expressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+
+	<sec:ldap-server id="appLdapServer" url="ldap://ldap1.byuh.edu" manager-dn="cn=Manager" manager-password="l0ckd0wn"/>
+	
+	<!-- <bean id="ldapAuthProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+		<constructor-arg>
+			<bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+				<constructor-arg ref="appLdapServer"/>
+				<property name="userDnPatterns">
+					<list><value>uid={0},ou=active,dc=byuh,dc=edu</value></list>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="edu.byuh.studentlife.admin.BYUHAuthoritiesPopulator"/>
+		</constructor-arg>
+	</bean> -->
+	
+	<sec:global-method-security pre-post-annotations="enabled"/>
+  
+</beans>

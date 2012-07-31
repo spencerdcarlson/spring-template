@@ -23,7 +23,7 @@ $(document).ready(function() {
 				answers[i] = $(this).val();
 				i++;
 			});
-			$('#questions').load(window.location+'result/'+$("#sectionId").val(), 'answers='+answers);
+			$('#questions').load('/edu/result/'+$("#sectionId").val(), 'answers='+answers);
 		}
 	});
 
@@ -34,5 +34,5 @@ function mainNavigation(id){
 //		$('#questions').html(data);
 //	});
 	
-	$('#questions').load(window.location+'section', {id: id});
+	$('#questions').load('/edu/section/'+id);
 }

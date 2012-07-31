@@ -74,8 +74,8 @@ public class QuestionController {
 		return "question";
 	}
 
-	@RequestMapping(value = "/section", method = RequestMethod.POST)
-	public String getSection(@RequestParam("id") String id, Model model){
+	@RequestMapping(value = "/section/{id}", method = RequestMethod.GET)
+	public String getSection(@PathVariable("id") String id, Model model){
 //		System.out.println("id: " +id);
 		int Id = Integer.parseInt(id);
 		Section sec = sectionManager.getSection(Id);
