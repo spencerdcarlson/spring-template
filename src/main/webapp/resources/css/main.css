@@ -53,3 +53,14 @@ header p {
 	background-image: linear-gradient(top, #645e5e, #230e0e);
 	color: white;
 }
+
+.modal {
+	width: 950px;
+	margin: -350px 0 0 0;
+	left: 10%;
+}
+
+.answers{
+	font-weight: bold;
+	text-decoration: underline;	
+}

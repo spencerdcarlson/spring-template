@@ -1,7 +1,4 @@
 $(document).ready(function() {  
-	$('header').click(function() {
-		alert("JQuery Enabled: You Clicked the Header");
-	});
 	$('#next').click(function() {
 		$('#content').load(window.location+'next');
 	});
@@ -15,6 +12,8 @@ $(document).ready(function() {
 	$('#submit-answer').click(function(){
 		var questNum = $("input:radio").length/2;
 		var answers = new Array();
+		alert("questNum: "+ questNum);
+		alert("number of radio btns: "+ $("input:radio:checked").length);
 		if($("input:radio:checked").length != questNum){
 			alert("Please answer all the questions!");
 		}else{
@@ -28,11 +27,28 @@ $(document).ready(function() {
 	});
 
 });
-
-function mainNavigation(id){
-//	$.get(window.location+'section', {id: id}, function(data){
-//		$('#questions').html(data);
-//	});
+function clikedAnswer(questionid, optionid, value) {
 	
+	//alert("Clicked Answer: " + questionid + " SubId: " + optionid + " Value: " + value);
+	var span = $(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']");
+	span.hide();
+	span.html(value);
+	span.fadeIn('fast');
+	
+<<<<<<< HEAD
 	$('#questions').load('/edu/section/'+id);
 }
+=======
+	//$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
+}
+function mainNavigation(id){
+	$('#questions').load(window.location+'section', {id: id});
+}
+function startQuiz(id){
+	$("section[data-quiz='"+id+"']").removeClass('hide');
+	$("button[data-quiz='"+id+"']").fadeOut('fast');
+	
+	
+}
+
+>>>>>>> 9b1ab2587255805efd1cd1b4f099845cb2460503

@@ -34,6 +34,8 @@
 	href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+	<script src="./resources/javascript/jquery.js"></script>
+	<script src="./resources/javascript/main.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">

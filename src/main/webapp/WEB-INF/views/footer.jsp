@@ -1,9 +1,5 @@
 <footer>
-	<p></p>
 </footer>
-
-</div>
-<!--/.fluid-container-->
 
 <!-- Le javascript
     ================================================== -->
