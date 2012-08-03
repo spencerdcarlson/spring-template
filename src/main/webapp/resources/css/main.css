@@ -68,3 +68,8 @@ header p {
 	font-weight: bold;
 	text-decoration: underline;	
 }
+
+#score {
+	text-align: center;
+	
+}

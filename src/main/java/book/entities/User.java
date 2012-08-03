@@ -35,5 +35,14 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public List<Section> getSectionsCompleted() {
+		return sectionsCompleted;
+	}
+	public void setSectionsCompleted(List<Section> sectionsCompleted) {
+		this.sectionsCompleted = sectionsCompleted;
+	}
+	public void addCompletedSection(Section section){
+		this.sectionsCompleted.add(section);
+	}
 
 }

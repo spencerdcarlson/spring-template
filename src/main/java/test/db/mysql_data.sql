@@ -29,8 +29,8 @@ INSERT INTO `resource` VALUES
 /* :: USER :: */
 /* | user_id | user_name | */
 INSERT INTO `user` VALUES 
-(1,'Spencer Carlson'),
-(2,'Nick Nguyen');
+(1,'spenc15'),
+(2,'Ngymn');
 
 
 

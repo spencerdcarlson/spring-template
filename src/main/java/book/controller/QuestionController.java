@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import book.entities.Question;
 import book.entities.Resource;
 import book.entities.Section;
+import book.entities.User;
 import book.hibernate.QuestionManager;
 import book.hibernate.SectionManager;
+import book.hibernate.UserManager;
 
 /**
  * Handles requests for the application home page.
@@ -37,13 +40,18 @@ public class QuestionController {
 	private SectionManager sectionManager;
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 	private int current = 0;
-	private int size; 
+	private int size;
+	@Autowired
+	private UserManager userManager;
+	
 
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/next", method = RequestMethod.GET)
 	public String nextQuestion(Locale locale, Model model) {
+		
+		
 		// Range of index control
 		current++;
 		size = questionManager.getSize();
@@ -75,12 +83,16 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "/section/{id}", method = RequestMethod.GET)
-	public String getSection(@PathVariable("id") String id, Model model){
-//		System.out.println("id: " +id);
+	public String getSection(@PathVariable("id") String id, Model model, HttpServletRequest request){
+		String username = request.getUserPrincipal().getName();
+		List<User> userList = userManager.getUser(username);
+		User currentUser = userList.get(0);
+		// System.out.println("id: " +id);
 		int Id = Integer.parseInt(id);
 		Section sec = sectionManager.getSection(Id);
 		List<Section> children = sectionManager.getSection(Id).getChildren();
 		List<Resource> resources = sec.getResources();
+		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("children", children);
 		model.addAttribute("section",sec);
 		model.addAttribute("resources",resources);
@@ -88,11 +100,20 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
-	public String getResult(@PathVariable("id") String id, @RequestParam("answers") String[] answers, Model model){
+	public String getResult(@PathVariable("id") String id, @RequestParam("answers") String[] answers, Model model, HttpServletRequest request){
 //		System.out.println("id: " +id);
+		String username = request.getUserPrincipal().getName();
+		List<User> userList = userManager.getUser(username);
+		User currentUser = userList.get(0);
+		
 		int Id = Integer.parseInt(id);
 		Section sec = sectionManager.getSection(Id);
+		currentUser.addCompletedSection(sec);
+		userManager.addUser(currentUser);
+		
+		//userManager.addCompletedSection(currentUser, sec);
 		List<Section> children = sectionManager.getSection(Id).getChildren();
+		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("children", children);
 		model.addAttribute("answers", answers);
 		model.addAttribute("section",sec);
@@ -100,7 +121,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "/section/json", method = RequestMethod.GET)
-	public void jsonData(Model model, @RequestParam("id") String id, HttpServletResponse response) {
+	public void jsonData(Model model, @RequestParam("id") String id, HttpServletResponse response, HttpServletRequest request) {
 		response.setContentType("application/json");
 		try {
 			PrintWriter out = response.getWriter();

@@ -9,7 +9,24 @@
 					<li class="nav-header"><a href="">Microlab Quizzes</a></li>
 					
 					<c:forEach var="section" items="${nav}" varStatus="status">
-						<li><a onclick="mainNavigation(this.id);" id="${section.sectionId}">${section.sectionName}</a></li>
+						<c:choose>
+							<c:when test="${fn:length(currentUser.sectionsCompleted) > 0 }">
+								<c:forEach var="sectionComplete" items="${currentUser.sectionsCompleted}" varStatus="compCount">
+									<c:choose>
+										<c:when test="${sectionComplete.sectionId ==  section.sectionId }" >
+											<!-- onclick='seeScore(this.id);' -->
+											<li><a onclick="seeScore(this.id);" id="${section.sectionId}">${section.sectionName} <i class="icon-ok"></i></a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a onclick="mainNavigation(this.id);" id="${section.sectionId}">${section.sectionName}</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<li><a onclick="mainNavigation(this.id);" id="${section.sectionId}">${section.sectionName}</a></li>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					
 				</ul>
@@ -29,6 +46,8 @@
 		<!--span9-->
 	</div>
 	<!--row fluid-->
+	<p>USER: ${currentUser.userName} ID: ${currentUser.userId}<p>
+	
 </div> <!-- container fluid -->
 <hr>
 <jsp:directive.include file="/WEB-INF/views/footer.jsp" />

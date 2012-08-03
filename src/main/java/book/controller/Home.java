@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 
 import book.entities.Question;
 import book.entities.Section;
+import book.entities.User;
 import book.hibernate.SectionManager;
 import book.hibernate.UserManager;
 
@@ -41,6 +42,8 @@ public class Home {
 	
 	@Autowired
 	private SectionManager sectionManager;
+	@Autowired
+	private UserManager userManager;
 	private static final Logger logger = LoggerFactory.getLogger(Home.class);
 	
 	
@@ -59,11 +62,24 @@ public class Home {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		String username = request.getUserPrincipal().getName();
+		
+		List<User> userList = userManager.getUser(username);
+		User currentUser;
+		if (userList.size() > 0 ){
+			currentUser = userList.get(0);
+		}else{
+			currentUser = new User();
+			currentUser.setUserName(username);
+			userManager.addUser(currentUser);
+		}
+		model.addAttribute("currentUser",currentUser);	
 		model.addAttribute("nav", nav);
 		model.addAttribute("topNode", topNode);
 		model.addAttribute("section", allSections);
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("username", username);
+		
+		
 		
 		
 		return "index";
