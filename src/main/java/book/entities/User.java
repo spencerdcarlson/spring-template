@@ -1,5 +1,6 @@
 package book.entities;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ public class User {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Section> sectionsCompleted;
 	
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -44,5 +46,8 @@ public class User {
 	public void addCompletedSection(Section section){
 		this.sectionsCompleted.add(section);
 	}
+	
+	
+	
 
 }

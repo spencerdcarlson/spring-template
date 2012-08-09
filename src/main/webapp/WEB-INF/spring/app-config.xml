@@ -60,7 +60,7 @@
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_test" />
+			value="jdbc:mysql://eis-test-db1.byuh.edu/reading_writing_center" />
 
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/dyad_book" 
 			/> -->

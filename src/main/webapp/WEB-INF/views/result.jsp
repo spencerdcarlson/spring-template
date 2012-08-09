@@ -52,3 +52,4 @@
 	</div>
 	<!-- row-fluid -->
 </c:forEach>
+<button id='resultDone' data-section="${section.sectionId}" data-score="" onClick="addScore(this.getAttribute('data-section'),this.getAttribute('data-score'));">Done</button>

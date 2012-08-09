@@ -119,16 +119,16 @@ public class QuestionController {
 		model.addAttribute("section",sec);
 		return "result";
 	}
-
-	@RequestMapping(value = "/section/json", method = RequestMethod.GET)
-	public void jsonData(Model model, @RequestParam("id") String id, HttpServletResponse response, HttpServletRequest request) {
-		response.setContentType("application/json");
-		try {
-			PrintWriter out = response.getWriter();
-			//out.write(sectionManager.getJSONChildren(sectionManager.getSection(Integer.parseInt(id))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//return sectionManager.getJSONChildren(sectionManager.getSection(2));
+	
+	@RequestMapping(value = "/score", method = RequestMethod.GET)
+	public void saveScore(@RequestParam("section") String section, @RequestParam("score") String score, HttpServletRequest request){
+		Section sectionSave = sectionManager.getSection(Integer.parseInt(section));
+		Double scoreSave = Double.parseDouble(score);
+		String username = request.getUserPrincipal().getName();
+		List<User> userList = userManager.getUser(username);
+		User currentUser = userList.get(0);
+		System.out.println("SAVE Score: "+scoreSave+" TO SECTION: " + sectionSave.getSectionName());
+		userManager.addUser(currentUser);
 	}
+	
 }

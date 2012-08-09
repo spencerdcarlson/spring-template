@@ -78,10 +78,6 @@ public class Home {
 		model.addAttribute("section", allSections);
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("username", username);
-		
-		
-		
-		
 		return "index";
 		
 	}

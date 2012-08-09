@@ -46,7 +46,7 @@
 		<!--span9-->
 	</div>
 	<!--row fluid-->
-	<p>USER: ${currentUser.userName} ID: ${currentUser.userId}<p>
+	
 	
 </div> <!-- container fluid -->
 <hr>

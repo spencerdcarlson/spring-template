@@ -16,4 +16,6 @@ public interface UserHibernateInterface {
 	public List<User> getUser(String username);
 	
 	public void addCompletedSection(User user, Section section);
+	
+	
 }

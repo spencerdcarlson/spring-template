@@ -12,7 +12,7 @@
             <sec:filter-chain pattern="/resources/**" filters="none" />
             <!-- <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" /> -->
            
-          <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,logoutFilter"/>
+          <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,logoutFilter" /> 
             <!--   <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,j2eePreAuthFilter,logoutFilter,etf,fsi"/> -->
              <!-- filters="none" -->
         </sec:filter-chain-map>
@@ -86,7 +86,7 @@
     <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator" id="ticketValidator">
         <constructor-arg index="0" value="https://cas.byuh.edu/cas" />
         <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
-        <property name="proxyCallbackUrl" value="http://localhost:8080/notes/home" />
+        <property name="proxyCallbackUrl" value="https://eis-test-dev1.byuh.edu/notes/home" />
         <property name="renew" value="true"/>
     </bean>
 
@@ -96,13 +96,13 @@
 
     <bean id="casAuthenticationFilter" class="org.jasig.cas.client.authentication.AuthenticationFilter">
         <property name="casServerLoginUrl" value="https://cas.byuh.edu/cas/login" />
-        <property name="serverName" value="http://localhost:8080" />
+        <property name="serverName" value="https://eis-test-dev1.byuh.edu" />
         <!-- <property name="serverName" value="localhost:8080" /> -->
         <property name="renew" value="true"/>
     </bean>
 
     <bean id="casValidationFilter" class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">
-        <property name="serverName" value="http://localhost:8080" />
+        <property name="serverName" value="https://eis-test-dev1.byuh.edu" />
         <!-- <property name="serverName" value="localhost:8080" /> -->
         <property name="exceptionOnValidationFailure" value="true" />
         <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />

@@ -12,7 +12,7 @@
             <sec:filter-chain pattern="/resources/**" filters="none" />
             <!-- <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" /> -->
            
-          <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,logoutFilter"/>
+          <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,logoutFilter" /> 
             <!--   <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,j2eePreAuthFilter,logoutFilter,etf,fsi"/> -->
              <!-- filters="none" -->
         </sec:filter-chain-map>

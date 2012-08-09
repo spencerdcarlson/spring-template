@@ -26,13 +26,6 @@ INSERT INTO `resource` VALUES
 (4,'1A-1',NULL,3),
 (5,'1A-2',NULL,3);
 
-/* :: USER :: */
-/* | user_id | user_name | */
-INSERT INTO `user` VALUES 
-(1,'spenc15'),
-(2,'Ngymn');
-
-
 
 
 

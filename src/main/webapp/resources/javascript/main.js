@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var correct = $(".grade[data-graded='1']").length;
 	var score = 100 * (correct / (incorrect + correct));
 	score = score.toPrecision(3);
+	$('#resultDone').attr('data-score', score);
 	$("#score").html("<strong>Score: "+score+"%</strong>");
 	
 	
@@ -35,6 +36,22 @@ $(document).ready(function() {
 	});
 
 });
+
+function addScore(sectionSave, scoreSave){
+	alert("Add Score: " + scoreSave + " To Section: " + sectionSave);
+	$.ajax({
+		type: "GET",
+		url: window.location+"score",
+		data: { section: sectionSave, score: scoreSave }
+	});
+	//	$.get(
+//			window.location+"score",
+//			"{section:"+section+", score:"+score+"}",
+//			function(data){alert("Sucess");}
+//			
+//	);
+	
+}
 
 
 function clikedAnswer(questionid, optionid, value) {
