@@ -1,0 +1,20 @@
+<Context>
+   <Resource name="jdbc/gym" auth="Container"
+   		     type="javax.sql.DataSource"
+   		     username="issueroom"
+   		     password="bhutr5Qe"
+   		     driverClassName="oracle.jdbc.driver.OracleDriver"
+   		     url="jdbc:oracle:thin:@Oracle11gprd.byuh.edu:1521:storm"
+   		     maxActive="15"
+   		     maxIdle="5"
+   />
+      <Resource name="jdbc/storm" auth="Container"
+   		     type="javax.sql.DataSource"
+   		     username="mailroom"
+   		     password="mtp4cageBH"
+   		     driverClassName="oracle.jdbc.driver.OracleDriver"
+   		     url="jdbc:oracle:thin:@Oracle11gprd.byuh.edu:1521:storm"
+   		     maxActive="15"
+   		     maxIdle="5"
+   />  
+</Context>

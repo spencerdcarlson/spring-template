@@ -24,6 +24,7 @@ import book.entities.Question;
 import book.entities.Resource;
 import book.entities.Section;
 import book.entities.User;
+import book.hibernate.PSDataAccess;
 import book.hibernate.QuestionManager;
 import book.hibernate.SectionManager;
 import book.hibernate.UserManager;
@@ -43,6 +44,8 @@ public class QuestionController {
 	private int size;
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private PSDataAccess ps;
 	
 
 	/**
@@ -88,6 +91,7 @@ public class QuestionController {
 		List<User> userList = userManager.getUser(username);
 		User currentUser = userList.get(0);
 		// System.out.println("id: " +id);
+		String studentName = ps.getStudentName(username);
 		int Id = Integer.parseInt(id);
 		Section sec = sectionManager.getSection(Id);
 		List<Section> children = sectionManager.getSection(Id).getChildren();
@@ -96,6 +100,7 @@ public class QuestionController {
 		model.addAttribute("children", children);
 		model.addAttribute("section",sec);
 		model.addAttribute("resources",resources);
+		model.addAttribute("username", studentName);
 		return "section";
 	}
 	
@@ -105,6 +110,7 @@ public class QuestionController {
 		String username = request.getUserPrincipal().getName();
 		List<User> userList = userManager.getUser(username);
 		User currentUser = userList.get(0);
+		String studentName = ps.getStudentName(username);
 		
 		int Id = Integer.parseInt(id);
 		Section sec = sectionManager.getSection(Id);
@@ -117,6 +123,7 @@ public class QuestionController {
 		model.addAttribute("children", children);
 		model.addAttribute("answers", answers);
 		model.addAttribute("section",sec);
+		model.addAttribute("username", studentName);
 		return "result";
 	}
 	
@@ -131,4 +138,16 @@ public class QuestionController {
 		userManager.addUser(currentUser);
 	}
 	
+	@RequestMapping(value = "/teacher", method = RequestMethod.GET)
+	public String getTeacher(Model model, HttpServletRequest request){
+		String username = request.getUserPrincipal().getName();
+		List<User> userList = userManager.getUser(username);
+		User currentUser = userList.get(0);
+		String studentName = ps.getStudentName(username);
+		List<Section> labs = sectionManager.getSection(1).getChildren();
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("labs",labs);
+		model.addAttribute("username", studentName);
+		return "teacher";
+	}
 }

@@ -1,3 +1,4 @@
+var rootFolder = '/template/';
 $(document).ready(function() {  
 	var incorrect = $(".grade[data-graded='0']").length;
 	var correct = $(".grade[data-graded='1']").length;
@@ -31,7 +32,7 @@ $(document).ready(function() {
 				answers[i] = $(this).val();
 				i++;
 			});
-			$('#questions').load('/edu/result/'+$("#sectionId").val(), 'answers='+answers);
+			$('#questions').load(rootFolder+'result/'+$("#sectionId").val(), 'answers='+answers);
 		}
 	});
 
@@ -68,7 +69,7 @@ function clikedAnswer(questionid, optionid, value) {
 //$(".answers[data-questionid='"+ questionid +"'][data-optionid='"+ optionid + "']").html(value).fadeIn(1000);
 
 function mainNavigation(id){
-	$('#questions').load('/template/section/'+id);
+	$('#questions').load(rootFolder+'section/'+id);
 }
 function startQuiz(id){
 	$("section[data-quiz='"+id+"']").removeClass('hide');
@@ -106,7 +107,9 @@ function quizDone() {
 		
 		// Load quiz report
 		var id = $('#mainSection').attr('data-sectionId');
-		$('#questions').load('/template/result/'+id, 'answers='+answers);
+//		$('<body></body>').load(rootFolder);
+		$('#questions').load(rootFolder+'result/'+id, 'answers='+answers);
+		$('#lab-nav').load(rootFolder+' #lab-list');
 	}
 }
 
@@ -122,4 +125,6 @@ function getAnswers(){
 	return answers;
 }
 
-
+function teacherPage(){
+	$('#questions').load(rootFolder+'teacher');
+}

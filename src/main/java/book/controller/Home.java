@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -30,6 +33,8 @@ import org.json.simple.JSONObject;
 import book.entities.Question;
 import book.entities.Section;
 import book.entities.User;
+//import book.hibernate.PersonManager;
+import book.hibernate.PSDataAccess;
 import book.hibernate.SectionManager;
 import book.hibernate.UserManager;
 
@@ -42,6 +47,13 @@ public class Home {
 	
 	@Autowired
 	private SectionManager sectionManager;
+	
+//	@Autowired
+//	private PersonManager personManager;
+	
+	@Autowired
+	private PSDataAccess ps;
+	
 	@Autowired
 	private UserManager userManager;
 	private static final Logger logger = LoggerFactory.getLogger(Home.class);
@@ -62,6 +74,7 @@ public class Home {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		String username = request.getUserPrincipal().getName();
+		String studentName = ps.getStudentName(username);
 		
 		List<User> userList = userManager.getUser(username);
 		User currentUser;
@@ -72,12 +85,13 @@ public class Home {
 			currentUser.setUserName(username);
 			userManager.addUser(currentUser);
 		}
-		model.addAttribute("currentUser",currentUser);	
+		model.addAttribute("currentUser",currentUser);
 		model.addAttribute("nav", nav);
 		model.addAttribute("topNode", topNode);
 		model.addAttribute("section", allSections);
 		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("username", username);
+//		model.addAttribute("username", username);
+		model.addAttribute("username", studentName);
 		return "index";
 		
 	}

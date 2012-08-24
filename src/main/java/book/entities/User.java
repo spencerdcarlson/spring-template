@@ -23,6 +23,8 @@ public class User {
 	private String userName;
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Section> sectionsCompleted;
+	@Column(name = "teacher")
+	private int teacher;
 	
 	
 	public int getUserId() {
@@ -46,8 +48,12 @@ public class User {
 	public void addCompletedSection(Section section){
 		this.sectionsCompleted.add(section);
 	}
-	
-	
+	public int getTeacher(){
+		return teacher;
+	}
+	public void setTeacher(int teacher){
+		this.teacher = teacher;
+	}
 	
 
 }

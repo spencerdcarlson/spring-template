@@ -31,7 +31,7 @@
 		<org.cloudfoundry-version>0.6.1</org.cloudfoundry-version>
 		<org.jasig.cas.client-version>3.1.10</org.jasig.cas.client-version>
 		<spring.version>3.0.5.RELEASE</spring.version>
-		<env>prod</env>
+		<env>local</env>
 	</properties>
 
 	<!-- JSR 303 with Hibernate Validator -->
@@ -272,6 +272,7 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
 	</dependencies>
 
 	<repositories>

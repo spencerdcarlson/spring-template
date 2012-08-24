@@ -74,5 +74,19 @@
 		<jdbc:script location="classpath:test/db/mysql_schema.sql" />
 		<jdbc:script location="classpath:test/db/mysql_data.sql" />
 	</jdbc:initialize-database>
+	
+	
+<!-- CONNECT TO HPROD DATABASE -->
+	<bean id="psDataAccess" class="book.hibernate.PSDataAccess">
+		<property name="dataSource" ref="dataSource1"/>
+	</bean>
+    	<!-- DataSources -->
+	<bean id="dataSource1" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/hdev"/>
+		<property name="resourceRef" value="true"/>
+	</bean>	
+	
+<!-- 	<bean id="personManager" class="book.hibernate.PersonManager" /> -->
+	
 
 </beans>
