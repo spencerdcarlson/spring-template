@@ -1,8 +1,8 @@
 <Context>
    <Resource name="jdbc/hdev" auth="Container"
    		     type="javax.sql.DataSource"
-   		     username="ora_sdc"
-   		     password="stul1f3"
+   		     username="?????"
+   		     password="?????"
    		     driverClassName="oracle.jdbc.driver.OracleDriver"
    		     url="jdbc:oracle:thin:@psdev.byuh.edu:1521:hdev"
    		     maxActive="15"
