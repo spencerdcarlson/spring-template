@@ -10,7 +10,7 @@
 
 	<properties>
 		<!-- depndencies -->
-		<org.springframework-version>3.1.0.RELEASE</org.springframework-version>
+		<org.springframework-version>6.0.0</org.springframework-version>
 		<hsqldb-version>1.8.0.10</hsqldb-version>
 		<junit-version>4.7</junit-version>
 		<log4j-version>1.2.14</log4j-version>
